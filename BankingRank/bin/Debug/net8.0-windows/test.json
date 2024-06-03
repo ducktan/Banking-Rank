@@ -1,0 +1,32 @@
+[{
+    "Tên": "Antonio Rose",
+    "Số CMND/CCCD": {
+      "$numberLong": "531342926752"
+    },
+    "Số khoản vay": 5,
+    "Số lần trễ hạn": 3,
+    "Số tiền nợ": 81,
+    "Giá trị tài sản": 47267,
+    "Thời gian sử dụng dịch vụ": 1,
+    "Tổng thời gian từ lúc mở thẻ": 5,
+    "Số loại hình tín dụng": 9,
+    "Tổng loại hình tín dụng": 112,
+    "Số tài khoản mới trong 1 tháng": 5,
+    "Tổng số tài khoản người dùng": 18
+  },
+  {
+    "Tên": "Brian Alexander",
+    "Số CMND/CCCD": {
+      "$numberLong": "786089516163"
+    },
+    "Số khoản vay": 9,
+    "Số lần trễ hạn": 2,
+    "Số tiền nợ": 315,
+    "Giá trị tài sản": 41582,
+    "Thời gian sử dụng dịch vụ": 2,
+    "Tổng thời gian từ lúc mở thẻ": 15,
+    "Số loại hình tín dụng": 10,
+    "Tổng loại hình tín dụng": 44,
+    "Số tài khoản mới trong 1 tháng": 3,
+    "Tổng số tài khoản người dùng": 7
+  }]

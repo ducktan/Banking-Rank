@@ -39,6 +39,13 @@
             textBox1 = new TextBox();
             label2 = new Label();
             tabPage2 = new TabPage();
+            groupBox1 = new GroupBox();
+            textBox8 = new TextBox();
+            label15 = new Label();
+            textBox7 = new TextBox();
+            label14 = new Label();
+            textBox6 = new TextBox();
+            label13 = new Label();
             button8 = new Button();
             textBox5 = new TextBox();
             label12 = new Label();
@@ -64,19 +71,12 @@
             priName = new TextBox();
             label9 = new Label();
             keysize = new TextBox();
-            groupBox1 = new GroupBox();
-            label13 = new Label();
-            textBox6 = new TextBox();
-            textBox7 = new TextBox();
-            label14 = new Label();
-            label15 = new Label();
-            textBox8 = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
+            groupBox1.SuspendLayout();
             tabPage3.SuspendLayout();
             tabPage4.SuspendLayout();
-            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -156,6 +156,7 @@
             button2.TabIndex = 3;
             button2.Text = "Upload";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -166,6 +167,7 @@
             button1.TabIndex = 2;
             button1.Text = "Choose file";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // textBox1
             // 
@@ -197,6 +199,73 @@
             tabPage2.Size = new Size(971, 445);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Ranking";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(textBox8);
+            groupBox1.Controls.Add(label15);
+            groupBox1.Controls.Add(textBox7);
+            groupBox1.Controls.Add(label14);
+            groupBox1.Controls.Add(textBox6);
+            groupBox1.Controls.Add(label13);
+            groupBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox1.Location = new Point(25, 151);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(902, 194);
+            groupBox1.TabIndex = 5;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Information";
+            // 
+            // textBox8
+            // 
+            textBox8.Location = new Point(125, 122);
+            textBox8.Name = "textBox8";
+            textBox8.Size = new Size(216, 34);
+            textBox8.TabIndex = 10;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label15.Location = new Point(23, 125);
+            label15.Name = "label15";
+            label15.Size = new Size(79, 28);
+            label15.TabIndex = 9;
+            label15.Text = "▶ Point";
+            // 
+            // textBox7
+            // 
+            textBox7.Location = new Point(636, 53);
+            textBox7.Name = "textBox7";
+            textBox7.Size = new Size(228, 34);
+            textBox7.TabIndex = 7;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label14.Location = new Point(374, 53);
+            label14.Name = "label14";
+            label14.Size = new Size(256, 28);
+            label14.TabIndex = 8;
+            label14.Text = "▶ Citizen identification card";
+            // 
+            // textBox6
+            // 
+            textBox6.Location = new Point(125, 48);
+            textBox6.Name = "textBox6";
+            textBox6.Size = new Size(216, 34);
+            textBox6.TabIndex = 6;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label13.Location = new Point(23, 48);
+            label13.Name = "label13";
+            label13.Size = new Size(86, 28);
+            label13.TabIndex = 6;
+            label13.Text = "▶ Name";
             // 
             // button8
             // 
@@ -278,6 +347,7 @@
             button3.TabIndex = 7;
             button3.Text = "Download";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click_1;
             // 
             // button4
             // 
@@ -288,6 +358,7 @@
             button4.TabIndex = 6;
             button4.Text = "Choose file";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // textBox2
             // 
@@ -375,6 +446,7 @@
             button7.TabIndex = 16;
             button7.Text = "GENKEY";
             button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
             // 
             // label6
             // 
@@ -446,73 +518,6 @@
             keysize.Size = new Size(443, 30);
             keysize.TabIndex = 8;
             // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(textBox8);
-            groupBox1.Controls.Add(label15);
-            groupBox1.Controls.Add(textBox7);
-            groupBox1.Controls.Add(label14);
-            groupBox1.Controls.Add(textBox6);
-            groupBox1.Controls.Add(label13);
-            groupBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.Location = new Point(25, 151);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(902, 194);
-            groupBox1.TabIndex = 5;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Information";
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label13.Location = new Point(23, 48);
-            label13.Name = "label13";
-            label13.Size = new Size(86, 28);
-            label13.TabIndex = 6;
-            label13.Text = "▶ Name";
-            // 
-            // textBox6
-            // 
-            textBox6.Location = new Point(125, 48);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(216, 34);
-            textBox6.TabIndex = 6;
-            // 
-            // textBox7
-            // 
-            textBox7.Location = new Point(636, 53);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(228, 34);
-            textBox7.TabIndex = 7;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label14.Location = new Point(374, 53);
-            label14.Name = "label14";
-            label14.Size = new Size(256, 28);
-            label14.TabIndex = 8;
-            label14.Text = "▶ Citizen identification card";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label15.Location = new Point(23, 125);
-            label15.Name = "label15";
-            label15.Size = new Size(79, 28);
-            label15.TabIndex = 9;
-            label15.Text = "▶ Point";
-            // 
-            // textBox8
-            // 
-            textBox8.Location = new Point(125, 122);
-            textBox8.Name = "textBox8";
-            textBox8.Size = new Size(216, 34);
-            textBox8.TabIndex = 10;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -528,12 +533,12 @@
             tabPage1.PerformLayout();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             tabPage3.ResumeLayout(false);
             tabPage3.PerformLayout();
             tabPage4.ResumeLayout(false);
             tabPage4.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
