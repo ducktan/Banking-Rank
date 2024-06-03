@@ -97,21 +97,45 @@ namespace BankingRank
 
         private void button7_Click(object sender, EventArgs e)
         {
-            // Khởi tạo các tham số mã hóa
-            var parms = new EncryptionParameters(SchemeType.CKKS);
-            parms.PolyModulusDegree = 8192;
-            parms.CoeffModulus = CoeffModulus.Create(8192, new int[] { 60, 40, 40, 60 });
+            // Thiết lập tham số mã hóa
+
+            EncryptionParameters parms = new EncryptionParameters(SchemeType.BFV);
+            ulong polyModulusDegree = 8192;
+            parms.PolyModulusDegree = polyModulusDegree;
+            parms.CoeffModulus = CoeffModulus.BFVDefault(polyModulusDegree);
+            parms.PlainModulus = PlainModulus.Batching(polyModulusDegree, 20);
 
             // Tạo ngữ cảnh mã hóa
-            var context = new SEALContext(parms);
+            SEALContext context = new SEALContext(parms);
 
-            // Khởi tạo key generator
-            var keyGenerator = new KeyGenerator(context);
-            var publicKey = keyGenerator.CreatePublicKey();
-            var secretKey = keyGenerator.SecretKey;
+            // Tạo khóa công khai, khóa bí mật và mã hóa
+            KeyGenerator keygen = new KeyGenerator(context);
+            PublicKey publicKey;
+            keygen.CreatePublicKey(out publicKey); // Sử dụng phương thức này để lấy ra khóa công khai.
+            SecretKey secretKey = keygen.SecretKey;
 
-            priText.Text = secretKey.ToString();
-            pubText.Text = publicKey.ToString();
+            // Lưu khóa công khai và bí mật vào file dưới dạng Hex
+            using (var ms = new MemoryStream())
+            {
+                publicKey.Save(ms);
+                string publicKeyHex = BitConverter.ToString(ms.ToArray()).Replace("-", "");
+
+                ms.Position = 0;
+                secretKey.Save(ms);
+                string secretKeyHex = BitConverter.ToString(ms.ToArray()).Replace("-", "");
+
+                File.WriteAllText(priName.Text, secretKeyHex);
+                File.WriteAllText(pubName.Text, publicKeyHex);
+            }
+
+            // Đọc khóa công khai và bí mật từ file
+            string secret = File.ReadAllText(priName.Text);
+            string publicK = File.ReadAllText(pubName.Text);
+
+            // Hiển thị khóa công khai và bí mật lên RichTextBox
+            priText.Text = secret;
+            pubText.Text = publicK;
+
             MessageBox.Show("Gen key successfully!");
         }
     }

@@ -64,13 +64,11 @@
             priText = new RichTextBox();
             button7 = new Button();
             label6 = new Label();
-            formatKey = new ComboBox();
             label7 = new Label();
             pubName = new TextBox();
             label8 = new Label();
             priName = new TextBox();
-            label9 = new Label();
-            keysize = new TextBox();
+            textBox9 = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -380,19 +378,17 @@
             // tabPage4
             // 
             tabPage4.BackColor = Color.White;
+            tabPage4.Controls.Add(textBox9);
             tabPage4.Controls.Add(label10);
             tabPage4.Controls.Add(label11);
             tabPage4.Controls.Add(pubText);
             tabPage4.Controls.Add(priText);
             tabPage4.Controls.Add(button7);
             tabPage4.Controls.Add(label6);
-            tabPage4.Controls.Add(formatKey);
             tabPage4.Controls.Add(label7);
             tabPage4.Controls.Add(pubName);
             tabPage4.Controls.Add(label8);
             tabPage4.Controls.Add(priName);
-            tabPage4.Controls.Add(label9);
-            tabPage4.Controls.Add(keysize);
             tabPage4.Location = new Point(4, 32);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new Padding(3);
@@ -404,7 +400,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.Location = new Point(17, 345);
+            label10.Location = new Point(508, 156);
             label10.Name = "label10";
             label10.Size = new Size(103, 23);
             label10.TabIndex = 20;
@@ -415,7 +411,7 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label11.Location = new Point(16, 254);
+            label11.Location = new Point(17, 156);
             label11.Name = "label11";
             label11.Size = new Size(111, 23);
             label11.TabIndex = 19;
@@ -423,24 +419,26 @@
             // 
             // pubText
             // 
-            pubText.Location = new Point(17, 371);
+            pubText.Location = new Point(508, 202);
             pubText.Name = "pubText";
-            pubText.Size = new Size(926, 44);
+            pubText.ReadOnly = true;
+            pubText.Size = new Size(435, 225);
             pubText.TabIndex = 18;
             pubText.Text = "";
             // 
             // priText
             // 
-            priText.Location = new Point(17, 292);
+            priText.Location = new Point(17, 202);
             priText.Name = "priText";
-            priText.Size = new Size(926, 37);
+            priText.ReadOnly = true;
+            priText.Size = new Size(442, 225);
             priText.TabIndex = 17;
             priText.Text = "";
             // 
             // button7
             // 
             button7.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button7.Location = new Point(15, 205);
+            button7.Location = new Point(16, 97);
             button7.Name = "button7";
             button7.Size = new Size(186, 39);
             button7.TabIndex = 16;
@@ -452,26 +450,17 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
-            label6.Location = new Point(509, 35);
+            label6.Location = new Point(803, 20);
             label6.Name = "label6";
             label6.Size = new Size(80, 23);
             label6.TabIndex = 15;
             label6.Text = "FORMAT";
             // 
-            // formatKey
-            // 
-            formatKey.FormattingEnabled = true;
-            formatKey.Items.AddRange(new object[] { "DER", "Base64" });
-            formatKey.Location = new Point(509, 67);
-            formatKey.Name = "formatKey";
-            formatKey.Size = new Size(433, 31);
-            formatKey.TabIndex = 14;
-            // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
-            label7.Location = new Point(509, 118);
+            label7.Location = new Point(508, 13);
             label7.Name = "label7";
             label7.Size = new Size(98, 23);
             label7.TabIndex = 13;
@@ -479,16 +468,16 @@
             // 
             // pubName
             // 
-            pubName.Location = new Point(509, 151);
+            pubName.Location = new Point(508, 46);
             pubName.Name = "pubName";
-            pubName.Size = new Size(433, 30);
+            pubName.Size = new Size(247, 30);
             pubName.TabIndex = 12;
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
-            label8.Location = new Point(16, 118);
+            label8.Location = new Point(15, 13);
             label8.Name = "label8";
             label8.Size = new Size(91, 23);
             label8.TabIndex = 11;
@@ -496,27 +485,19 @@
             // 
             // priName
             // 
-            priName.Location = new Point(16, 151);
+            priName.Location = new Point(15, 46);
             priName.Name = "priName";
             priName.Size = new Size(444, 30);
             priName.TabIndex = 10;
             // 
-            // label9
+            // textBox9
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
-            label9.Location = new Point(16, 35);
-            label9.Name = "label9";
-            label9.Size = new Size(79, 23);
-            label9.TabIndex = 9;
-            label9.Text = "KEY SIZE";
-            // 
-            // keysize
-            // 
-            keysize.Location = new Point(17, 68);
-            keysize.Name = "keysize";
-            keysize.Size = new Size(443, 30);
-            keysize.TabIndex = 8;
+            textBox9.Location = new Point(803, 46);
+            textBox9.Name = "textBox9";
+            textBox9.ReadOnly = true;
+            textBox9.Size = new Size(140, 30);
+            textBox9.TabIndex = 21;
+            textBox9.Text = "HEX";
             // 
             // Form1
             // 
@@ -566,13 +547,10 @@
         private TextBox textBox4;
         private Label label5;
         private Label label6;
-        private ComboBox formatKey;
         private Label label7;
         private TextBox pubName;
         private Label label8;
         private TextBox priName;
-        private Label label9;
-        private TextBox keysize;
         private Label label10;
         private Label label11;
         private RichTextBox pubText;
@@ -588,5 +566,6 @@
         private Label label14;
         private TextBox textBox6;
         private Label label13;
+        private TextBox textBox9;
     }
 }
