@@ -1,8 +1,6 @@
 [{
     "Tên": "Antonio Rose",
-    "Số CMND/CCCD": {
-      "$numberLong": "531342926752"
-    },
+    "Số CMND/CCCD": "531342926752",
     "Số khoản vay": 5,
     "Số lần trễ hạn": 3,
     "Số tiền nợ": 81,
@@ -16,9 +14,7 @@
   },
   {
     "Tên": "Brian Alexander",
-    "Số CMND/CCCD": {
-      "$numberLong": "786089516163"
-    },
+    "Số CMND/CCCD": "786089516163",
     "Số khoản vay": 9,
     "Số lần trễ hạn": 2,
     "Số tiền nợ": 315,

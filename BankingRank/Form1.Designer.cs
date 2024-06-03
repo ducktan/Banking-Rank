@@ -58,6 +58,7 @@
             textBox2 = new TextBox();
             label3 = new Label();
             tabPage4 = new TabPage();
+            textBox9 = new TextBox();
             label10 = new Label();
             label11 = new Label();
             pubText = new RichTextBox();
@@ -68,7 +69,6 @@
             pubName = new TextBox();
             label8 = new Label();
             priName = new TextBox();
-            textBox9 = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -127,6 +127,7 @@
             button5.TabIndex = 6;
             button5.Text = "Choose file";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // textBox3
             // 
@@ -396,6 +397,15 @@
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Gen key";
             // 
+            // textBox9
+            // 
+            textBox9.Location = new Point(803, 46);
+            textBox9.Name = "textBox9";
+            textBox9.ReadOnly = true;
+            textBox9.Size = new Size(140, 30);
+            textBox9.TabIndex = 21;
+            textBox9.Text = "HEX";
+            // 
             // label10
             // 
             label10.AutoSize = true;
@@ -489,15 +499,6 @@
             priName.Name = "priName";
             priName.Size = new Size(444, 30);
             priName.TabIndex = 10;
-            // 
-            // textBox9
-            // 
-            textBox9.Location = new Point(803, 46);
-            textBox9.Name = "textBox9";
-            textBox9.ReadOnly = true;
-            textBox9.Size = new Size(140, 30);
-            textBox9.TabIndex = 21;
-            textBox9.Text = "HEX";
             // 
             // Form1
             // 
