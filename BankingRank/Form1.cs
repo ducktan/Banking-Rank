@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Research.SEAL;
 using System.Text;
+using BankingRank.DAO;
+using System.Drawing.Imaging;
 
 namespace BankingRank
 {
@@ -46,15 +48,17 @@ namespace BankingRank
                                              .Select(x => Convert.ToByte(publicKeyHex.Substring(x, 2), 16))
                                              .ToArray();
 
-            // Tạo ngữ cảnh mã hóa và khóa công khai
-            EncryptionParameters parms = new EncryptionParameters(SchemeType.BFV);
+            // Thiết lập tham số mã hóa
+            EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
             ulong polyModulusDegree = 8192;
             parms.PolyModulusDegree = polyModulusDegree;
-            parms.CoeffModulus = CoeffModulus.BFVDefault(polyModulusDegree);
-            parms.PlainModulus = PlainModulus.Batching(polyModulusDegree, 20);
+            parms.CoeffModulus = CoeffModulus.Create(polyModulusDegree, new int[] { 60, 40, 40, 60 });
 
+            
             // Tạo ngữ cảnh mã hóa
             SEALContext context = new SEALContext(parms);
+            // Tạo CKKSEncoder thay vì BatchEncoder
+            CKKSEncoder encoder = new CKKSEncoder(context);
 
             // Tạo PublicKey mới và đọc khóa công khai từ byte array
             PublicKey publicKey = new PublicKey();
@@ -67,29 +71,56 @@ namespace BankingRank
             PublicKey myPublicKey = publicKey;
 
             Encryptor encryptor = new Encryptor(context, myPublicKey);
+           
+
+
             // Đọc dữ liệu JSON từ file
             string jsonData = File.ReadAllText(textBox1.Text);
-            // Phân tích cú pháp JSON thành JArray
-            JArray jsonArray = JArray.Parse(jsonData);
+            List<MyData> creditData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyData>>(jsonData);
 
-            // Khởi tạo một mảng mới để lưu trữ các đối tượng JSON đã được mã hóa
-            JArray encryptedJsonArray = new JArray();
-            // Lặp qua từng phần tử của mảng và xử lý
+            // Mã hóa từng thuộc tính của các đối tượng MyData
+            List<Ciphertext> encryptedData = new List<Ciphertext>();
 
-            foreach (var item in jsonArray)
+            foreach (var data in creditData)
             {
-                JObject jsonObject = (JObject)item;
 
-                // Mã hóa từng đối tượng JSON
-                JObject encryptedJsonObject = EncryptJsonObject(jsonObject, encryptor);
+                List<string> attributes = new List<string>
+                {
+                   
+                    data.LoanCount.ToString(),
+                    data.LatePaymentCount.ToString(),
+                    data.DebtAmount.ToString(),
+                    data.AssetValue.ToString(),
+                    data.ServiceUsageTime.ToString(),
+                    data.TotalTimeSinceCardOpened.ToString(),
+                    data.CreditTypeCount.ToString(),
+                    data.TotalCreditTypeCount.ToString(),
+                    data.NewAccountsInMonth.ToString(),
+                    data.TotalUserAccounts.ToString()
+                };
 
-                // Thêm đối tượng JSON đã được mã hóa vào mảng mới
-                encryptedJsonArray.Add(encryptedJsonObject);
+                for (int i = 0; i < attributes.Count; i++)
+                {
+
+                    long xx = long.Parse(attributes[i]);
+
+                    Plaintext plainData = new Plaintext();
+                    encoder.Encode(xx, plainData);
+                    Ciphertext encryptedDataItem = new Ciphertext();
+                    encryptor.Encrypt(plainData, encryptedDataItem);
+
+                    encryptedData.Add(encryptedDataItem);
+
+                }
             }
 
-            // Chuyển đổi mảng đã được mã hóa thành chuỗi JSON và ghi vào file
-            string encryptedJsonData = encryptedJsonArray.ToString();
-            File.WriteAllText("encrypted_data.json", encryptedJsonData);
+            string jsonDataRe = Newtonsoft.Json.JsonConvert.SerializeObject(encryptedData, Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText("encrypted_data.json", jsonDataRe);
+
+
+
+
+
             MessageBox.Show("Encrypt successfully!");
 
 
@@ -167,12 +198,10 @@ namespace BankingRank
         private void button7_Click(object sender, EventArgs e)
         {
             // Thiết lập tham số mã hóa
-
-            EncryptionParameters parms = new EncryptionParameters(SchemeType.BFV);
+            EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
             ulong polyModulusDegree = 8192;
             parms.PolyModulusDegree = polyModulusDegree;
-            parms.CoeffModulus = CoeffModulus.BFVDefault(polyModulusDegree);
-            parms.PlainModulus = PlainModulus.Batching(polyModulusDegree, 20);
+            parms.CoeffModulus = CoeffModulus.Create(polyModulusDegree, new int[] { 60, 40, 40, 60 });
 
             // Tạo ngữ cảnh mã hóa
             SEALContext context = new SEALContext(parms);
@@ -180,7 +209,7 @@ namespace BankingRank
             // Tạo khóa công khai, khóa bí mật và mã hóa
             KeyGenerator keygen = new KeyGenerator(context);
             PublicKey publicKey;
-            keygen.CreatePublicKey(out publicKey); // Sử dụng phương thức này để lấy ra khóa công khai.
+            keygen.CreatePublicKey(out publicKey);
             SecretKey secretKey = keygen.SecretKey;
 
             // Lưu khóa công khai và bí mật vào file dưới dạng Hex
