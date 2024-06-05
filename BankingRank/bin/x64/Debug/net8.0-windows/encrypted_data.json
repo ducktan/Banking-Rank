@@ -1,262 +1,266 @@
 [
   {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 135,
-      "IsInitialized": true,
+    "ID": "KyQwGsZHfdSGiTQHosc8/bPYdXlkE2LrTmNGK5joqbvpQ2Db/RNXfd0QYYEvSOoOp7rb76WdKIeMyuTWRincB78Ppz4fiOtni/6SVl2ibGrhTa/uwNY1aeY18flEe1cCSd50P4xuTraqRuUpb+JyUqEfGovny5xLGPDoViGS/vEIytKZuPE7WEuJfNlZcDqxgpgGkIDdPXeZNbYB+G9cvse8sKiiI0h1sOKlNLVkoLUB/KBFx+sRnNfB9O+4hIYTDg9BXlET5EhsYdqI0XQmVoD5KAtPg4pc7rzoYqcrbWvkaRhKa6elAZTHzmNSMxfjGbzb331EAmVrXgxpbl5LV4or6/PE0cHQl9WwOI/IlUtM/w4BBIgjp8x3FTN0U2WG2FK7iyOHosqxLqO+c0CQxlY3xBV4UvUAaRQ2ohY7TlBvSuWdc0JaAizZ6hVzA3FtM9viHBttZXeRFRobNNcd4J0oFWn3wnCxexuwf8tevpVrE1irWPJ3e5RBFo5jsFgnRBaVTUcMXNc0Pn2pHTQYtz5zPE4AFBiMh4qZH/l1Rw==",
+    "Name": "Ggc6WcVrn5Irfr10k+6nrabtN9vev/jr47Rdma1sIkQ8JRRuNHK2J4TnRpaAKLdrfUV1Z3IIbg9JsRRSod+bSax8oHtyqC4u6GrEKrcmfvpiFSCLg8ANPNYzULPdvfO2QFr5D0Ik9wX+L6l9HSBdcgH56SCBb8w92lINjuS4kM7PT1FSsc5SWtev7NEZCanaHW4nQWf3XgoPEsDIAdfx/GM8IMP0+S/qdK9OxN1qake5cJI7cOsL1KFRwL3V9Xs849vZ5woxYyhRY2g2tbcyAWsVPJvCHVw6WVk67PUBiic30HcFxLHyZkV89rGnU8BrSy5n9GDSQ978adbNB1j8osD9dmjXVqgeJ6hdQhLKnaIshbC9F0wTPUqoHYDLrKhpbnLPEJuaaQsUNQG31tG2Mtx/E97INgfg6BNduxs68HWtvmFWrOPfWWUO45QgvtntG5qoczx7ThZrg7JsTIa6ZVS5kSAFom/Zfjn6T6rOnjrLYkRE4a71pa/UszzXhRvhZG/f1jMsev25f/D/Uias4bQ4HCT298nxztyHkPD3wA==",
+    "LoanCount": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 135,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
     },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 136,
-      "IsInitialized": true,
+    "LatePaymentCount": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 136,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
     },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 137,
-      "IsInitialized": true,
+    "DebtAmount": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 137,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
     },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 138,
-      "IsInitialized": true,
+    "AssetValue": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 138,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
     },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 139,
-      "IsInitialized": true,
+    "ServiceUsageTime": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 139,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
     },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 140,
-      "IsInitialized": true,
+    "TotalTimeSinceCardOpened": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 140,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
     },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 141,
-      "IsInitialized": true,
+    "CreditTypeCount": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 141,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
     },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 142,
-      "IsInitialized": true,
+    "TotalCreditTypeCount": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 142,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
     },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 143,
-      "IsInitialized": true,
+    "NewAccountsInMonth": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 143,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
     },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 16524920,
-      "UseCount": 144,
-      "IsInitialized": true,
+    "TotalUserAccounts": {
+      "CoeffModulusSize": 3,
+      "PolyModulusDegree": 8192,
+      "SizeCapacity": 2,
+      "Size": 2,
+      "IsTransparent": false,
+      "IsNTTForm": true,
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 144,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
       "IsDisposed": false
-    },
-    "IsDisposed": false
+    }
   }
 ]

@@ -1,16 +1,16 @@
-[{
-    "Tên": "Antonio Rose",
-    "Số CMND/CCCD": "531342926752",
-    "Số khoản vay": 5
-  }, 
+[
   {
-    "Tên": "Marry Alance",
-    "Số CMND/CCCD": "12341234512",
-    "Số khoản vay": 7
-  }, 
-  {
-    "Tên": "Joe Alex",
-    "Số CMND/CCCD": "1234543441342",
-    "Số khoản vay": 2
-  }
+  "Name": "Antonio Rose",
+  "CCCD": "531342926752",
+  "LoanNum": 5,
+  "LatePaymentCount": 3,
+  "DebtAmount": 81,
+  "AssetValue": 47267,
+  "ServiceUsageTime": 1,
+  "TotalTimeSinceCardOpened ": 5,
+  "CreditTypeCount": 9,
+  "TotalCreditTypeCount": 112,
+  "NewAccountsInMonth": 5,
+  "TotalUserAccounts": 18
+}
 ]

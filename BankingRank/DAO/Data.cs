@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Research.SEAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,41 +10,58 @@ namespace BankingRank.DAO
 {
     public class MyData
     {
-        [JsonPropertyName("Tên")]
+        [JsonPropertyName("Name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("Số CMND/CCCD")]
-        public string ID { get; set; }
+        [JsonPropertyName("CCCD")]
+        public string CCCD { get; set; }
 
-        [JsonPropertyName("Số khoản vay")]
+        [JsonPropertyName("LoanNum")]
         public int LoanCount { get; set; }
-        /*
-
-        [JsonPropertyName("Số lần trễ hạn")]
+        
+        [JsonPropertyName("LatePaymentCount")]
         public int LatePaymentCount { get; set; }
 
-        [JsonPropertyName("Số tiền nợ")]
+        [JsonPropertyName("DebtAmount")]
         public int DebtAmount { get; set; }
 
-        [JsonPropertyName("Giá trị tài sản")]
+        [JsonPropertyName("AssetValue")]
         public int AssetValue { get; set; }
 
-        [JsonPropertyName("Thời gian sử dụng dịch vụ")]
+        [JsonPropertyName("ServiceUsageTime")]
         public int ServiceUsageTime { get; set; }
 
-        [JsonPropertyName("Tổng thời gian từ lúc mở thẻ")]
+        [JsonPropertyName("TotalTimeSinceCardOpened ")]
         public int TotalTimeSinceCardOpened { get; set; }
 
-        [JsonPropertyName("Số loại hình tín dụng")]
+        [JsonPropertyName("CreditTypeCount")]
         public int CreditTypeCount { get; set; }
 
-        [JsonPropertyName("Tổng loại hình tín dụng")]
+        [JsonPropertyName("TotalCreditTypeCount")]
         public int TotalCreditTypeCount { get; set; }
 
-        [JsonPropertyName("Số tài khoản mới trong 1 tháng")]
+        [JsonPropertyName("NewAccountsInMonth")]
         public int NewAccountsInMonth { get; set; }
 
-        [JsonPropertyName("Tổng số tài khoản người dùng")]
-        public int TotalUserAccounts { get; set; } */
+        [JsonPropertyName("TotalUserAccounts")]
+        public int TotalUserAccounts { get; set; } 
+    }
+
+
+    public class mydata_encrypt
+    {
+        public byte[] ID { get; set; }
+        public byte[] Name { get; set; }
+        public Ciphertext LoanCount { get; set; }
+        public Ciphertext LatePaymentCount { get; set; }    
+        public Ciphertext DebtAmount { get; set; }
+        public Ciphertext AssetValue { get; set;}
+        public Ciphertext ServiceUsageTime { get; set; }
+        public Ciphertext TotalTimeSinceCardOpened { get;set; }
+        public Ciphertext CreditTypeCount { get; set;}
+        public Ciphertext TotalCreditTypeCount { get; set; }
+        public Ciphertext NewAccountsInMonth { get;set; }
+        public Ciphertext TotalUserAccounts { get; set; }
+
     }
 }
