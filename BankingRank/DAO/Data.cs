@@ -17,6 +17,7 @@ namespace BankingRank.DAO
 
         [JsonPropertyName("Số khoản vay")]
         public int LoanCount { get; set; }
+        /*
 
         [JsonPropertyName("Số lần trễ hạn")]
         public int LatePaymentCount { get; set; }
@@ -43,6 +44,6 @@ namespace BankingRank.DAO
         public int NewAccountsInMonth { get; set; }
 
         [JsonPropertyName("Tổng số tài khoản người dùng")]
-        public int TotalUserAccounts { get; set; }
+        public int TotalUserAccounts { get; set; } */
     }
 }

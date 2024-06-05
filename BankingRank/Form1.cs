@@ -10,12 +10,20 @@ using Microsoft.Research.SEAL;
 using System.Text;
 using BankingRank.DAO;
 using System.Drawing.Imaging;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BankingRank
 {
     public partial class Form1 : Form
     {
         MongoClient client = new MongoClient("mongodb+srv://22521303:NDTan1303uit%3E%3E@cluster0.hhv63yx.mongodb.net/");
+
+        static void SaveKeyToFile(string filePath, string key)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(key);
+            File.WriteAllText(filePath, BitConverter.ToString(bytes).Replace("-", ""));
+        }
 
         public Form1()
         {
@@ -38,15 +46,27 @@ namespace BankingRank
   
         private void button2_Click(object sender, EventArgs e)
         {
-            // Mã hoá dữ liệu      
-            // Đọc khóa công khai từ file
-            string publicKeyHex = File.ReadAllText(textBox3.Text);
+            // Đọc dữ liệu JSON từ file
+            string jsonData = File.ReadAllText("test.json");
+            List<MyData> creditData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyData>>(jsonData);
 
-            // Chuyển đổi chuỗi Hex sang byte array
-            byte[] publicKeyBytes = Enumerable.Range(0, publicKeyHex.Length)
-                                             .Where(x => x % 2 == 0)
-                                             .Select(x => Convert.ToByte(publicKeyHex.Substring(x, 2), 16))
-                                             .ToArray();
+            // Đọc public key từ file <SEAL>
+            string publicKeyHex = File.ReadAllText(textBox3.Text);
+            byte[] publicKeyByte = Enumerable.Range(0, publicKeyHex.Length)
+                                        .Where(x => x % 2 == 0)
+                                        .Select(x => Convert.ToByte(publicKeyHex.Substring(x, 2), 16))
+                                        .ToArray();
+
+            // Đọc public key từ file <SEAL>
+            string publicKeyHexRSA = File.ReadAllText("public_keyRSA.txt");
+            byte[] publicKeyRSA = Enumerable.Range(0, publicKeyHexRSA.Length)
+                                        .Where(x => x % 2 == 0)
+                                        .Select(x => Convert.ToByte(publicKeyHexRSA.Substring(x, 2), 16))
+                                        .ToArray();
+
+            // Tạo RSACryptoServiceProvider với public key
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            rsa.ImportRSAPublicKey(publicKeyRSA, out _);
 
             // Thiết lập tham số mã hóa
             EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
@@ -54,68 +74,63 @@ namespace BankingRank
             parms.PolyModulusDegree = polyModulusDegree;
             parms.CoeffModulus = CoeffModulus.Create(polyModulusDegree, new int[] { 60, 40, 40, 60 });
 
-            
             // Tạo ngữ cảnh mã hóa
             SEALContext context = new SEALContext(parms);
             // Tạo CKKSEncoder thay vì BatchEncoder
             CKKSEncoder encoder = new CKKSEncoder(context);
 
             // Tạo PublicKey mới và đọc khóa công khai từ byte array
-            PublicKey publicKey = new PublicKey();
-            using (var ms = new MemoryStream(publicKeyBytes))
+            Microsoft.Research.SEAL.PublicKey publicKeySEAL = new Microsoft.Research.SEAL.PublicKey();
+            using (var ms = new MemoryStream(publicKeyByte))
             {
-                publicKey.Load(context, ms);
+                publicKeySEAL.Load(context, ms);
             }
 
-            // Lưu PublicKey vào biến
-            PublicKey myPublicKey = publicKey;
 
-            Encryptor encryptor = new Encryptor(context, myPublicKey);
-           
+            Encryptor encryptor = new Encryptor(context, publicKeySEAL);
 
-
-            // Đọc dữ liệu JSON từ file
-            string jsonData = File.ReadAllText(textBox1.Text);
-            List<MyData> creditData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyData>>(jsonData);
-
-            // Mã hóa từng thuộc tính của các đối tượng MyData
+            // Mã hóa dữ liệu
             List<Ciphertext> encryptedData = new List<Ciphertext>();
-
+            List<MyData> encryptMyData = new List<MyData>();  
             foreach (var data in creditData)
             {
-
+                MyData myItem = new MyData();
                 List<string> attributes = new List<string>
                 {
-                   
-                    data.LoanCount.ToString(),
-                    data.LatePaymentCount.ToString(),
-                    data.DebtAmount.ToString(),
-                    data.AssetValue.ToString(),
-                    data.ServiceUsageTime.ToString(),
-                    data.TotalTimeSinceCardOpened.ToString(),
-                    data.CreditTypeCount.ToString(),
-                    data.TotalCreditTypeCount.ToString(),
-                    data.NewAccountsInMonth.ToString(),
-                    data.TotalUserAccounts.ToString()
+                    data.Name.ToString(),
+                    data.ID.ToString()
                 };
 
                 for (int i = 0; i < attributes.Count; i++)
                 {
-
-                    long xx = long.Parse(attributes[i]);
-
-                    Plaintext plainData = new Plaintext();
-                    encoder.Encode(xx, plainData);
-                    Ciphertext encryptedDataItem = new Ciphertext();
-                    encryptor.Encrypt(plainData, encryptedDataItem);
-
-                    encryptedData.Add(encryptedDataItem);
-
+                    // Mã hóa dữ liệu sử dụng RSA với public key
+                    byte[] encryptedBytes = rsa.Encrypt(Encoding.UTF8.GetBytes(attributes[i]), false);
+                    
                 }
+                myItem.ID = attributes[0];
+                myItem.Name = attributes[1];
+
+
+
+
+                // Mã hóa số lượng khoản vay sử dụng bộ mã hóa đã cung cấp
+                Plaintext plainData = new Plaintext();
+                encoder.Encode(data.LoanCount, plainData);
+                Ciphertext encryptedDataItem = new Ciphertext();
+                encryptor.Encrypt(plainData, encryptedDataItem);
+                myItem.LoanCount = encryptedDataItem;
+
+
+
+                encryptMyData.Add(myItem);
             }
 
+            // Lưu dữ liệu mã hóa vào file JSON
             string jsonDataRe = Newtonsoft.Json.JsonConvert.SerializeObject(encryptedData, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText("encrypted_data.json", jsonDataRe);
+
+
+
 
 
 
@@ -197,6 +212,18 @@ namespace BankingRank
 
         private void button7_Click(object sender, EventArgs e)
         {
+            // RSA
+            // Generate RSA key pair
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(2048);
+            string publicKeyRSA = rsa.ToXmlString(false);
+            string privateKeyRSA = rsa.ToXmlString(true);
+
+            // Save public and private keys to files in Hex format
+            SaveKeyToFile("public_keyRSA.txt", publicKeyRSA);
+            SaveKeyToFile("private_keyRSA.txt", privateKeyRSA);
+
+
+
             // Thiết lập tham số mã hóa
             EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
             ulong polyModulusDegree = 8192;
@@ -208,7 +235,7 @@ namespace BankingRank
 
             // Tạo khóa công khai, khóa bí mật và mã hóa
             KeyGenerator keygen = new KeyGenerator(context);
-            PublicKey publicKey;
+            Microsoft.Research.SEAL.PublicKey publicKey;
             keygen.CreatePublicKey(out publicKey);
             SecretKey secretKey = keygen.SecretKey;
 
@@ -234,7 +261,7 @@ namespace BankingRank
             priText.Text = secret;
             pubText.Text = publicK;
 
-            MessageBox.Show("Gen key successfully!");
+            MessageBox.Show("Gen key successfully (RSA Default - HE)!");
         }
 
         private void button5_Click(object sender, EventArgs e)

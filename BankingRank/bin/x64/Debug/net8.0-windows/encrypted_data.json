@@ -18,8 +18,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 155,
+      "AllocByteCount": 16524920,
+      "UseCount": 135,
       "IsInitialized": true,
       "IsDisposed": false
     },
@@ -44,8 +44,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 156,
+      "AllocByteCount": 16524920,
+      "UseCount": 136,
       "IsInitialized": true,
       "IsDisposed": false
     },
@@ -70,8 +70,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 157,
+      "AllocByteCount": 16524920,
+      "UseCount": 137,
       "IsInitialized": true,
       "IsDisposed": false
     },
@@ -96,8 +96,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 158,
+      "AllocByteCount": 16524920,
+      "UseCount": 138,
       "IsInitialized": true,
       "IsDisposed": false
     },
@@ -122,8 +122,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 159,
+      "AllocByteCount": 16524920,
+      "UseCount": 139,
       "IsInitialized": true,
       "IsDisposed": false
     },
@@ -148,8 +148,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 160,
+      "AllocByteCount": 16524920,
+      "UseCount": 140,
       "IsInitialized": true,
       "IsDisposed": false
     },
@@ -174,8 +174,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 161,
+      "AllocByteCount": 16524920,
+      "UseCount": 141,
       "IsInitialized": true,
       "IsDisposed": false
     },
@@ -200,8 +200,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 162,
+      "AllocByteCount": 16524920,
+      "UseCount": 142,
       "IsInitialized": true,
       "IsDisposed": false
     },
@@ -226,8 +226,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 163,
+      "AllocByteCount": 16524920,
+      "UseCount": 143,
       "IsInitialized": true,
       "IsDisposed": false
     },
@@ -252,268 +252,8 @@
     "CorrectionFactor": 1,
     "Pool": {
       "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 164,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 165,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 166,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 167,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 168,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 169,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 170,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 171,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 172,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 173,
-      "IsInitialized": true,
-      "IsDisposed": false
-    },
-    "IsDisposed": false
-  },
-  {
-    "CoeffModulusSize": 3,
-    "PolyModulusDegree": 8192,
-    "SizeCapacity": 2,
-    "Size": 2,
-    "IsTransparent": false,
-    "IsNTTForm": true,
-    "ParmsId": {
-      "Block": [
-        1342082883023506191,
-        7162084550649654076,
-        10855999249838916620,
-        1321075796840322136
-      ]
-    },
-    "Scale": 1.0,
-    "CorrectionFactor": 1,
-    "Pool": {
-      "PoolCount": 32,
-      "AllocByteCount": 23012984,
-      "UseCount": 174,
+      "AllocByteCount": 16524920,
+      "UseCount": 144,
       "IsInitialized": true,
       "IsDisposed": false
     },
