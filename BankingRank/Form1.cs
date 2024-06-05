@@ -44,9 +44,9 @@ namespace BankingRank
       
 
   
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
-            
+            /*
             // Đọc dữ liệu JSON từ file
             string jsonData = File.ReadAllText("test.json");
             List<MyData> creditData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyData>>(jsonData);
@@ -200,7 +200,7 @@ namespace BankingRank
 
 
 
-
+            */
 
 
             
@@ -223,88 +223,94 @@ namespace BankingRank
                 BsonDocument document = new BsonDocument();
                 foreach (JProperty prop in obj.Properties())
                 {
-                    if (prop.Value.Type == JTokenType.Integer)
+                    // Convert the value to the correct data type before saving to MongoDB
+                    if (prop.Value.Type == JTokenType.Integer && prop.Value.ToObject<long>() > int.MaxValue)
                     {
-                        long propValue = prop.Value.ToObject<long>();
-                        if (propValue > int.MaxValue)
-                        {
-                            document[prop.Name] = new BsonDecimal128((decimal)propValue);
-                        }
-                        else
-                        {
-                            document[prop.Name] = (int)propValue;
-                        }
+                        document[prop.Name] = new BsonDecimal128(prop.Value.ToObject<decimal>());
                     }
-                    else if (prop.Value.Type == JTokenType.Float)
+                    else if (prop.Value.Type == JTokenType.Boolean)
                     {
-                        document[prop.Name] = prop.Value.ToObject<double>();
+                        document[prop.Name] = prop.Value.ToObject<bool>();
+                    }
+                    else if (prop.Value.Type == JTokenType.Date)
+                    {
+                        document[prop.Name] = prop.Value.ToObject<DateTime>();
                     }
                     else if (prop.Value.Type == JTokenType.Object)
                     {
-                        // Xử lý trường lưu trữ object
-                        if (prop.Name == "ParmsId")
+                        // Handle child objects
+                        JObject childObject = (JObject)prop.Value;
+                        BsonDocument childDocument = new BsonDocument();
+                        foreach (JProperty childProp in childObject.Properties())
                         {
-                            // Xử lý trường ParmsId
-                            BsonDocument parmsIdDoc = new BsonDocument();
-                            JObject parmsIdObj = (JObject)prop.Value;
-                            foreach (JProperty parmsIdProp in parmsIdObj.Properties())
+                            // Handle child fields
+                            if (childProp.Value.Type == JTokenType.Array)
                             {
-                                if (parmsIdProp.Value.Type == JTokenType.Array)
+                                // Handle the "Block" field in "ParmsId"
+                                if (childProp.Name == "Block")
                                 {
-                                    BsonArray parmsIdArray = new BsonArray();
-                                    foreach (JToken item in parmsIdProp.Value)
+                                    JArray blockArray = (JArray)childProp.Value;
+                                    if (blockArray.Count > 0)
                                     {
-                                        parmsIdArray.Add(new BsonInt64(item.ToObject<long>()));
+                                        BsonArray blockBsonArray = new BsonArray();
+                                        foreach (var item in blockArray)
+                                        {
+                                            if (item.Type == JTokenType.Integer && item.ToObject<long>() > int.MaxValue)
+                                            {
+                                                blockBsonArray.Add(new BsonInt64((long)item.ToObject<long>()));
+                                            }
+                                            else if (item.Type == JTokenType.Object && item["$numberLong"] != null)
+                                            {
+                                                blockBsonArray.Add(new BsonInt64((long)item["$numberLong"].ToObject<long>()));
+                                            }
+                                        }
+                                        childDocument[childProp.Name] = blockBsonArray;
                                     }
-                                    parmsIdDoc[parmsIdProp.Name] = parmsIdArray;
+                                    else
+                                    {
+                                        // If the "Block" array is empty, don't add it to the document
+                                        continue;
+                                    }
                                 }
                                 else
                                 {
-                                    parmsIdDoc[parmsIdProp.Name] = BsonValue.Create(parmsIdProp.Value);
+                                    BsonArray childBsonArray = new BsonArray();
+                                    foreach (var item in (JArray)childProp.Value)
+                                    {
+                                        childBsonArray.Add(BsonValue.Create(item.ToObject<object>()));
+                                    }
+                                    childDocument[childProp.Name] = childBsonArray;
                                 }
                             }
-                            document[prop.Name] = parmsIdDoc;
-                        }
-                        else
-                        {
-                            BsonDocument subdocument = new BsonDocument();
-                            foreach (JProperty subProp in ((JObject)prop.Value).Properties())
+                            else if (childProp.Value.Type == JTokenType.Object)
                             {
-                                if (subProp.Value.Type == JTokenType.Integer && subProp.Value.ToObject<long>() > int.MaxValue)
+                                // Handle the "Pool" field
+                                BsonDocument poolDocument = new BsonDocument();
+                                JObject poolObject = (JObject)childProp.Value;
+                                foreach (JProperty poolProp in poolObject.Properties())
                                 {
-                                    subdocument[subProp.Name] = new BsonDecimal128(subProp.Value.ToObject<decimal>());
+                                    poolDocument[poolProp.Name] = BsonValue.Create(poolProp.Value.ToObject<object>());
                                 }
-                                else
-                                {
-                                    subdocument[subProp.Name] = BsonValue.Create(subProp.Value);
-                                }
-                            }
-                            document[prop.Name] = subdocument;
-                        }
-                    }
-                    else if (prop.Value.Type == JTokenType.Array)
-                    {
-                        // Xử lý trường lưu trữ array
-                        BsonArray bsonArray = new BsonArray();
-                        foreach (JToken item in prop.Value)
-                        {
-                            if (item.Type == JTokenType.Integer && item.ToObject<long>() > int.MaxValue)
-                            {
-                                bsonArray.Add(new BsonDecimal128(item.ToObject<decimal>()));
+                                childDocument[childProp.Name] = poolDocument;
                             }
                             else
                             {
-                                bsonArray.Add(BsonValue.Create(item));
+                                childDocument[childProp.Name] = BsonValue.Create(childProp.Value.ToObject<object>());
                             }
                         }
-                        document[prop.Name] = bsonArray;
+                        document[prop.Name] = childDocument;
                     }
                     else
                     {
-                        document[prop.Name] = BsonValue.Create(prop.Value);
+                        document[prop.Name] = BsonValue.Create(prop.Value.ToObject<object>());
                     }
                 }
-                collection.InsertOne(document);
+
+                // Use BulkWrite to push data to MongoDB
+                var result = await collection.BulkWriteAsync(new List<WriteModel<BsonDocument>>
+                {
+                    new InsertOneModel<BsonDocument>(document)
+                });
             }
             MessageBox.Show("Dữ liệu đã được đẩy lên MongoDB.");
             

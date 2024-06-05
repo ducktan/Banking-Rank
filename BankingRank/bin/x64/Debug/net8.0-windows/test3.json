@@ -1,0 +1,25 @@
+[
+  {
+
+      "ParmsId": {
+        "Block": [
+          1342082883023506191,
+          7162084550649654076,
+          10855999249838916620,
+          1321075796840322136
+        ]
+      },
+      "Scale": 1.0,
+      "CorrectionFactor": 1,
+      "Pool": {
+        "PoolCount": 32,
+        "AllocByteCount": 16524920,
+        "UseCount": 135,
+        "IsInitialized": true,
+        "IsDisposed": false
+      },
+      "IsDisposed": false
+    
+   
+  }
+]
