@@ -50,9 +50,15 @@ namespace BankingRank.DAO
 
     public class mydata_encrypt
     {
-        public byte[] ID { get; set; }
+        [JsonPropertyName("CCCD")]
+        public byte[] CCCD { get; set; }
+        
+        [JsonPropertyName("Name")]
         public byte[] Name { get; set; }
+
+        [JsonPropertyName("LoanCount")]
         public Ciphertext LoanCount { get; set; }
+        /*
         public Ciphertext LatePaymentCount { get; set; }    
         public Ciphertext DebtAmount { get; set; }
         public Ciphertext AssetValue { get; set;}
@@ -61,7 +67,12 @@ namespace BankingRank.DAO
         public Ciphertext CreditTypeCount { get; set;}
         public Ciphertext TotalCreditTypeCount { get; set; }
         public Ciphertext NewAccountsInMonth { get;set; }
-        public Ciphertext TotalUserAccounts { get; set; }
+        public Ciphertext TotalUserAccounts { get; set; }*/
 
     }
+
+
+    
+
+
 }

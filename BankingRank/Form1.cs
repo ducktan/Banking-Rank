@@ -13,6 +13,8 @@ using System.Drawing.Imaging;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
+using ThirdParty.Json.LitJson;
+using System.Buffers;
 
 namespace BankingRank
 {
@@ -46,7 +48,7 @@ namespace BankingRank
 
   
         private async void button2_Click(object sender, EventArgs e)
-        {
+        {/*
             
             // Đọc dữ liệu JSON từ file
             string jsonData = File.ReadAllText(textBox1.Text);
@@ -62,15 +64,15 @@ namespace BankingRank
             // Đọc public key từ file "public_keyRSA.txt"
             string publicKeyHexRSA = File.ReadAllText("public_keyRSA.txt");
             // Chuyển đổi chuỗi hex thành mảng byte
-            byte[] publicKeyBytes = new byte[publicKeyHexRSA.Length / 2];
+            byte[] publicKeyBytesRSA = new byte[publicKeyHexRSA.Length / 2];
             for (int i = 0; i < publicKeyHexRSA.Length; i += 2)
             {
-                publicKeyBytes[i / 2] = Convert.ToByte(publicKeyHexRSA.Substring(i, 2), 16);
+                publicKeyBytesRSA[i / 2] = Convert.ToByte(publicKeyHexRSA.Substring(i, 2), 16);
             }
 
             // Khởi tạo RSA từ modulus và exponent
             RSAParameters rsaParameters = new RSAParameters();
-            rsaParameters.Modulus = publicKeyBytes; // Gán modulus từ chuỗi hex
+            rsaParameters.Modulus = publicKeyBytesRSA; // Gán modulus từ chuỗi hex
             rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Giả sử một số exponent cụ thể, bạn cần thay đổi nếu cần
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
             rsa.ImportParameters(rsaParameters);
@@ -116,7 +118,7 @@ namespace BankingRank
                     byte[] encryptedBytes = rsa.Encrypt(Encoding.UTF8.GetBytes(attributes[i]), false);
                     encryptedAttributes.Add(encryptedBytes);
                 }
-                myItem.ID = encryptedAttributes[0];
+                myItem.CCCD = encryptedAttributes[0];
                 myItem.Name = encryptedAttributes[1];
 
 
@@ -312,7 +314,7 @@ namespace BankingRank
                 });
             }
             MessageBox.Show("Dữ liệu đã được đẩy lên MongoDB.");
-            
+            */
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -357,34 +359,6 @@ namespace BankingRank
             MessageBox.Show("Dữ liệu đã được tải về file 'customer_data.json'.");
             */
 
-            // Decrypt
-            // Đọc dữ liệu JSON từ file
-            string jsonData = File.ReadAllText("down.json");
-            List<MyData> creditData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyData>>(jsonData);
-
-            // Đọc public key từ file "pub.txt"
-            string publicKeyHex = File.ReadAllText(textBox3.Text);
-            byte[] publicKeyByte = Enumerable.Range(0, publicKeyHex.Length)
-                                        .Where(x => x % 2 == 0)
-                                        .Select(x => Convert.ToByte(publicKeyHex.Substring(x, 2), 16))
-                                        .ToArray();
-
-            // Đọc public key từ file "public_keyRSA.txt"
-            string publicKeyHexRSA = File.ReadAllText("public_keyRSA.txt");
-            // Chuyển đổi chuỗi hex thành mảng byte
-            byte[] publicKeyBytes = new byte[publicKeyHexRSA.Length / 2];
-            for (int i = 0; i < publicKeyHexRSA.Length; i += 2)
-            {
-                publicKeyBytes[i / 2] = Convert.ToByte(publicKeyHexRSA.Substring(i, 2), 16);
-            }
-
-            // Khởi tạo RSA từ modulus và exponent
-            RSAParameters rsaParameters = new RSAParameters();
-            rsaParameters.Modulus = publicKeyBytes; // Gán modulus từ chuỗi hex
-            rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Giả sử một số exponent cụ thể, bạn cần thay đổi nếu cần
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-            rsa.ImportParameters(rsaParameters);
-
             // Thiết lập tham số mã hóa
             EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
             ulong polyModulusDegree = 8192;
@@ -396,16 +370,75 @@ namespace BankingRank
             // Tạo CKKSEncoder thay vì BatchEncoder
             CKKSEncoder encoder = new CKKSEncoder(context);
 
-            // Tạo PublicKey mới và đọc khóa công khai từ byte array
-            Microsoft.Research.SEAL.PublicKey publicKeySEAL = new Microsoft.Research.SEAL.PublicKey();
-            using (var ms = new MemoryStream(publicKeyByte))
+            // Decrypt
+            string jsonData = File.ReadAllText("down.json");
+            JArray jsonArray = JArray.Parse(jsonData);
+
+            List<mydata_encrypt> creditData = new List<mydata_encrypt>();
+
+            foreach (JObject item in jsonArray)
             {
-                publicKeySEAL.Load(context, ms);
+                mydata_encrypt data = new mydata_encrypt();
+                data.CCCD = item["CCCD"].ToObject<byte[]>();
+                data.Name = item["Name"].ToObject<byte[]>();
+
+                JObject loanCountObject = (JObject)item["LoanCount"];
+
+                // Tạo MemoryPoolHandle từ JSON data
+                MemoryPoolHandle memoryPool = MemoryPoolHandle.Create(
+                    (int)loanCountObject["Pool"]["PoolCount"],
+                    (long)loanCountObject["Pool"]["AllocByteCount"],
+                    (int)loanCountObject["Pool"]["UseCount"],
+                    (bool)loanCountObject["Pool"]["IsInitialized"],
+                    (bool)loanCountObject["Pool"]["IsDisposed"]
+                );
+                Ciphertext ciphertext = new Ciphertext(context);
+
+                creditData.Add(data);
             }
 
 
-            Encryptor encryptor = new Encryptor(context, publicKeySEAL);
 
+
+            MessageBox.Show("Success");
+
+            /*
+            // Đọc private key từ file "pri.txt"
+            string prikeyHex = File.ReadAllText("pri.txt");
+            byte[] prikeyByteSEAL = Enumerable.Range(0, prikeyHex.Length)
+                                        .Where(x => x % 2 == 0)
+                                        .Select(x => Convert.ToByte(prikeyHex.Substring(x, 2), 16))
+                                        .ToArray();
+
+            // Đọc public key từ file "private_keyRSA.txt"
+            string privateKeyHexRSA = File.ReadAllText("private_keyRSA.txt");
+            // Chuyển đổi chuỗi hex thành mảng byte
+            byte[] privateKeyBytesRSA = new byte[privateKeyHexRSA.Length / 2];
+            for (int i = 0; i < privateKeyHexRSA.Length; i += 2)
+            {
+                privateKeyBytesRSA[i / 2] = Convert.ToByte(privateKeyHexRSA.Substring(i, 2), 16);
+            }
+
+            // Khởi tạo RSA từ modulus và exponent
+            RSAParameters rsaParameters = new RSAParameters();
+            rsaParameters.Modulus = privateKeyBytesRSA; // Gán modulus từ chuỗi hex
+            rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Giả sử một số exponent cụ thể, bạn cần thay đổi nếu cần
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            rsa.ImportParameters(rsaParameters);
+
+
+           
+
+            // Tạo PublicKey mới và đọc khóa công khai từ byte array
+            Microsoft.Research.SEAL.SecretKey privateSEAL = new Microsoft.Research.SEAL.SecretKey();
+            using (var ms = new MemoryStream(prikeyByteSEAL))
+            {
+                privateSEAL.Load(context, ms);
+            }
+
+            Decryptor decryptor = new Decryptor(context, privateSEAL);
+           
+            */
         }
 
         private void button4_Click(object sender, EventArgs e)

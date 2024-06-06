@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "BankingRank\\Form1.cs",
               "ToolTip": "C:\\Users\\tieul\\Document\\NT219DoAn\\BankingRank\\BankingRank\\Form1.cs",
               "RelativeToolTip": "BankingRank\\Form1.cs",
-              "ViewState": "AQIAAGgBAAAAAAAAAAAowGoBAAA1AAAA",
+              "ViewState": "AQIAAHMBAAAAAAAAAAAowIMBAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-27T03:21:05.287Z",
               "IsPinned": true,
@@ -58,7 +58,7 @@
               "RelativeDocumentMoniker": "BankingRank\\DAO\\Data.cs",
               "ToolTip": "C:\\Users\\tieul\\Document\\NT219DoAn\\BankingRank\\BankingRank\\DAO\\Data.cs",
               "RelativeToolTip": "BankingRank\\DAO\\Data.cs",
-              "ViewState": "AQIAACkAAAAAAAAAAAAUwEEAAAAFAAAA",
+              "ViewState": "AQIAAEMAAAAAAAAAAAAcwEkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-04T15:05:06.137Z",
               "EditorCaption": ""
@@ -72,7 +72,8 @@
               "ToolTip": "C:\\Users\\tieul\\Document\\NT219DoAn\\BankingRank\\BankingRank\\Form1.cs [Design]",
               "RelativeToolTip": "BankingRank\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-03T09:42:06.513Z"
+              "WhenOpened": "2024-06-03T09:42:06.513Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
@@ -96,7 +97,8 @@
               "RelativeToolTip": "BankingRank\\Form1.Designer.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T03:09:10.467Z"
+              "WhenOpened": "2024-05-27T03:09:10.467Z",
+              "EditorCaption": ""
             }
           ]
         }
