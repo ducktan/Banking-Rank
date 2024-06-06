@@ -46,13 +46,13 @@ namespace BankingRank
   
         private async void button2_Click(object sender, EventArgs e)
         {
-            /*
+            
             // Đọc dữ liệu JSON từ file
-            string jsonData = File.ReadAllText("test.json");
+            string jsonData = File.ReadAllText(textBox1.Text);
             List<MyData> creditData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyData>>(jsonData);
 
             // Đọc public key từ file "pub.txt"
-            string publicKeyHex = File.ReadAllText("pub.txt");
+            string publicKeyHex = File.ReadAllText(textBox3.Text);
             byte[] publicKeyByte = Enumerable.Range(0, publicKeyHex.Length)
                                         .Where(x => x % 2 == 0)
                                         .Select(x => Convert.ToByte(publicKeyHex.Substring(x, 2), 16))
@@ -200,7 +200,7 @@ namespace BankingRank
 
 
 
-            */
+            
 
 
             
@@ -238,64 +238,62 @@ namespace BankingRank
                     }
                     else if (prop.Value.Type == JTokenType.Object)
                     {
-                        // Handle child objects
                         JObject childObject = (JObject)prop.Value;
                         BsonDocument childDocument = new BsonDocument();
                         foreach (JProperty childProp in childObject.Properties())
                         {
-                            // Handle child fields
-                            if (childProp.Value.Type == JTokenType.Array)
+                            if (childProp.Value.Type == JTokenType.Object)
                             {
-                                // Handle the "Block" field in "ParmsId"
-                                if (childProp.Name == "Block")
-                                {
-                                    JArray blockArray = (JArray)childProp.Value;
-                                    if (blockArray.Count > 0)
-                                    {
-                                        BsonArray blockBsonArray = new BsonArray();
-                                        foreach (var item in blockArray)
-                                        {
-                                            if (item.Type == JTokenType.Integer && item.ToObject<long>() > int.MaxValue)
-                                            {
-                                                blockBsonArray.Add(new BsonInt64((long)item.ToObject<long>()));
-                                            }
-                                            else if (item.Type == JTokenType.Object && item["$numberLong"] != null)
-                                            {
-                                                blockBsonArray.Add(new BsonInt64((long)item["$numberLong"].ToObject<long>()));
-                                            }
-                                        }
-                                        childDocument[childProp.Name] = blockBsonArray;
-                                    }
-                                    else
-                                    {
-                                        // If the "Block" array is empty, don't add it to the document
-                                        continue;
-                                    }
-                                }
-                                else
-                                {
-                                    BsonArray childBsonArray = new BsonArray();
-                                    foreach (var item in (JArray)childProp.Value)
-                                    {
-                                        childBsonArray.Add(BsonValue.Create(item.ToObject<object>()));
-                                    }
-                                    childDocument[childProp.Name] = childBsonArray;
-                                }
-                            }
-                            else if (childProp.Value.Type == JTokenType.Object)
-                            {
-                                // Handle the "Pool" field
+                                // Handle the "Pool" object
                                 BsonDocument poolDocument = new BsonDocument();
                                 JObject poolObject = (JObject)childProp.Value;
                                 foreach (JProperty poolProp in poolObject.Properties())
                                 {
-                                    poolDocument[poolProp.Name] = BsonValue.Create(poolProp.Value.ToObject<object>());
+                                    if (poolProp.Value.Type == JTokenType.Array)
+                                    {
+                                        // Handle array properties within the "Pool" object
+                                        BsonArray arrayValue = new BsonArray();
+                                        JArray arrayToken = (JArray)poolProp.Value;
+                                        foreach (JToken item in arrayToken)
+                                        {
+                                            if (item.Type == JTokenType.Integer)
+                                            {
+                                                // Convert System.Numerics.BigInteger to BsonDecimal
+                                                arrayValue.Add(BsonValue.Create(item.ToObject<decimal>()));
+                                            }
+                                            else
+                                            {
+                                                arrayValue.Add(BsonValue.Create(item.ToObject<object>()));
+                                            }
+                                        }
+                                        poolDocument[poolProp.Name] = arrayValue;
+                                    }
+                                    else
+                                    {
+                                        if (poolProp.Value.Type == JTokenType.Integer)
+                                        {
+                                            // Convert System.Numerics.BigInteger to BsonDecimal
+                                            poolDocument[poolProp.Name] = BsonValue.Create(poolProp.Value.ToObject<decimal>());
+                                        }
+                                        else
+                                        {
+                                            poolDocument[poolProp.Name] = BsonValue.Create(poolProp.Value.ToObject<object>());
+                                        }
+                                    }
                                 }
                                 childDocument[childProp.Name] = poolDocument;
                             }
                             else
                             {
-                                childDocument[childProp.Name] = BsonValue.Create(childProp.Value.ToObject<object>());
+                                if (childProp.Value.Type == JTokenType.Integer)
+                                {
+                                    // Convert System.Numerics.BigInteger to BsonDecimal
+                                    childDocument[childProp.Name] = BsonValue.Create(childProp.Value.ToObject<decimal>());
+                                }
+                                else
+                                {
+                                    childDocument[childProp.Name] = BsonValue.Create(childProp.Value.ToObject<object>());
+                                }
                             }
                         }
                         document[prop.Name] = childDocument;

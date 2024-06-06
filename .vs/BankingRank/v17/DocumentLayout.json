@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "BankingRank\\Form1.cs",
               "ToolTip": "C:\\Users\\tieul\\Document\\NT219DoAn\\BankingRank\\BankingRank\\Form1.cs",
               "RelativeToolTip": "BankingRank\\Form1.cs",
-              "ViewState": "AQIAAMAAAAAAAAAAAAAowDABAABeAAAA",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAowD0AAABCAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-27T03:21:05.287Z",
               "IsPinned": true,
@@ -71,7 +71,8 @@
               "ToolTip": "C:\\Users\\tieul\\Document\\NT219DoAn\\BankingRank\\BankingRank\\Form1.cs [Design]",
               "RelativeToolTip": "BankingRank\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-03T09:42:06.513Z"
+              "WhenOpened": "2024-06-03T09:42:06.513Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
@@ -95,7 +96,8 @@
               "RelativeToolTip": "BankingRank\\Form1.Designer.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T03:09:10.467Z"
+              "WhenOpened": "2024-05-27T03:09:10.467Z",
+              "EditorCaption": ""
             }
           ]
         }
