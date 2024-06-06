@@ -12,6 +12,7 @@ using BankingRank.DAO;
 using System.Drawing.Imaging;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 
 namespace BankingRank
 {
@@ -320,28 +321,91 @@ namespace BankingRank
         }
 
         private void button3_Click_1(object sender, EventArgs e)
-        {
+        {/*
             IMongoDatabase database = client.GetDatabase("Crypto");
-            IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("CustomerTest");
+            IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("Test");
 
             // Truy vấn dữ liệu từ MongoDB, không lấy trường "_id"
             var documents = collection.Find(FilterDefinition<BsonDocument>.Empty)
                                      .Project(Builders<BsonDocument>.Projection.Exclude("_id"))
                                      .ToList();
 
-            // Chuyển đổi dữ liệu thành JSON array
+            // Định dạng lại JSON output
             var jsonWriterSettings = new JsonWriterSettings
             {
                 Indent = true,
                 OutputMode = JsonOutputMode.Strict
             };
+            static string FormatBsonDocument(BsonDocument doc, JsonWriterSettings settings)
+            {
+                var json = doc.ToJson(settings);
 
-            var jsonData = "[\n" + string.Join(",\n", documents.Select(doc => doc.ToJson(jsonWriterSettings))) + "\n]";
+                // Định dạng lại các trường có dạng "$numberDecimal"
+                json = Regex.Replace(json, @"\{\s*""?\$numberDecimal""?\s*:\s*""?([-+]?\d+(?:\.\d+)?)""?\s*\}", m => $"{m.Groups[1].Value}");
 
+                return json;
+            }
+
+            var jsonData = "[\n" + string.Join(",\n", documents.Select(doc => FormatBsonDocument(doc, jsonWriterSettings))) + "\n]";
+
+           
             // Lưu dữ liệu JSON vào file
             File.WriteAllText("down.json", jsonData);
 
+
+
             MessageBox.Show("Dữ liệu đã được tải về file 'customer_data.json'.");
+            */
+
+            // Decrypt
+            // Đọc dữ liệu JSON từ file
+            string jsonData = File.ReadAllText("down.json");
+            List<MyData> creditData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyData>>(jsonData);
+
+            // Đọc public key từ file "pub.txt"
+            string publicKeyHex = File.ReadAllText(textBox3.Text);
+            byte[] publicKeyByte = Enumerable.Range(0, publicKeyHex.Length)
+                                        .Where(x => x % 2 == 0)
+                                        .Select(x => Convert.ToByte(publicKeyHex.Substring(x, 2), 16))
+                                        .ToArray();
+
+            // Đọc public key từ file "public_keyRSA.txt"
+            string publicKeyHexRSA = File.ReadAllText("public_keyRSA.txt");
+            // Chuyển đổi chuỗi hex thành mảng byte
+            byte[] publicKeyBytes = new byte[publicKeyHexRSA.Length / 2];
+            for (int i = 0; i < publicKeyHexRSA.Length; i += 2)
+            {
+                publicKeyBytes[i / 2] = Convert.ToByte(publicKeyHexRSA.Substring(i, 2), 16);
+            }
+
+            // Khởi tạo RSA từ modulus và exponent
+            RSAParameters rsaParameters = new RSAParameters();
+            rsaParameters.Modulus = publicKeyBytes; // Gán modulus từ chuỗi hex
+            rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Giả sử một số exponent cụ thể, bạn cần thay đổi nếu cần
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            rsa.ImportParameters(rsaParameters);
+
+            // Thiết lập tham số mã hóa
+            EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
+            ulong polyModulusDegree = 8192;
+            parms.PolyModulusDegree = polyModulusDegree;
+            parms.CoeffModulus = CoeffModulus.Create(polyModulusDegree, new int[] { 60, 40, 40, 60 });
+
+            // Tạo ngữ cảnh mã hóa
+            SEALContext context = new SEALContext(parms);
+            // Tạo CKKSEncoder thay vì BatchEncoder
+            CKKSEncoder encoder = new CKKSEncoder(context);
+
+            // Tạo PublicKey mới và đọc khóa công khai từ byte array
+            Microsoft.Research.SEAL.PublicKey publicKeySEAL = new Microsoft.Research.SEAL.PublicKey();
+            using (var ms = new MemoryStream(publicKeyByte))
+            {
+                publicKeySEAL.Load(context, ms);
+            }
+
+
+            Encryptor encryptor = new Encryptor(context, publicKeySEAL);
+
         }
 
         private void button4_Click(object sender, EventArgs e)
