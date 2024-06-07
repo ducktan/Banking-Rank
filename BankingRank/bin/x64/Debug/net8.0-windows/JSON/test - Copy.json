@@ -2,43 +2,6 @@
   {
   "Name": "Antonio Rose",
   "CCCD": "531342926752",
-  "LoanNum": 5,
-  "LatePaymentCount": 3,
-  "DebtAmount": 81,
-  "AssetValue": 47267,
-  "ServiceUsageTime": 1,
-  "TotalTimeSinceCardOpened ": 5,
-  "CreditTypeCount": 9,
-  "TotalCreditTypeCount": 112,
-  "NewAccountsInMonth": 5,
-  "TotalUserAccounts": 18
-}, 
-{
-  "Name": "Python",
-  "CCCD": "531342926752",
-  "LoanNum": 5,
-  "LatePaymentCount": 3,
-  "DebtAmount": 81,
-  "AssetValue": 47267,
-  "ServiceUsageTime": 1,
-  "TotalTimeSinceCardOpened ": 5,
-  "CreditTypeCount": 9,
-  "TotalCreditTypeCount": 112,
-  "NewAccountsInMonth": 5,
-  "TotalUserAccounts": 12
-}, 
-{
-  "Name": "Java",
-  "CCCD": "531342926752",
-  "LoanNum": 5,
-  "LatePaymentCount": 3,
-  "DebtAmount": 81,
-  "AssetValue": 47267,
-  "ServiceUsageTime": 1,
-  "TotalTimeSinceCardOpened ": 5,
-  "CreditTypeCount": 9,
-  "TotalCreditTypeCount": 112,
-  "NewAccountsInMonth": 5,
-  "TotalUserAccounts": 11
+  "LoanNum": 5
 }
 ]

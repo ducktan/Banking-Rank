@@ -18,8 +18,10 @@ namespace BankingRank.DAO
 
         [JsonPropertyName("LoanNum")]
         public int LoanCount { get; set; }
+
+
         
-        [JsonPropertyName("LatePaymentCount")]
+        /*[JsonPropertyName("LatePaymentCount")]
         public int LatePaymentCount { get; set; }
 
         [JsonPropertyName("DebtAmount")]
@@ -45,6 +47,7 @@ namespace BankingRank.DAO
 
         [JsonPropertyName("TotalUserAccounts")]
         public int TotalUserAccounts { get; set; } 
+        */
     }
 
 

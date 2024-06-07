@@ -15,11 +15,15 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using ThirdParty.Json.LitJson;
 using System.Buffers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.Json;
+using System.Xml.Linq;
 
 namespace BankingRank
 {
     public partial class Form1 : Form
     {
+
         MongoClient client = new MongoClient("mongodb+srv://22521303:NDTan1303uit%3E%3E@cluster0.hhv63yx.mongodb.net/");
 
         static void SaveKeyToFile(string filePath, string key)
@@ -48,7 +52,7 @@ namespace BankingRank
 
   
         private async void button2_Click(object sender, EventArgs e)
-        {/*
+        {
             
             // Đọc dữ liệu JSON từ file
             string jsonData = File.ReadAllText(textBox1.Text);
@@ -129,7 +133,7 @@ namespace BankingRank
                 encryptor.Encrypt(plainData, encryptedDataItem);
                 myItem.LoanCount = encryptedDataItem;
 
-
+                /*
                 // Mã hóa số lượng khoản trả chậm
                 Plaintext plainLatePaymentCount = new Plaintext();
                 encoder.Encode(data.LatePaymentCount, plainLatePaymentCount);
@@ -191,7 +195,7 @@ namespace BankingRank
                 encoder.Encode(data.TotalUserAccounts, plainTotalUserAccounts);
                 Ciphertext encryptedTotalUserAccounts = new Ciphertext();
                 encryptor.Encrypt(plainTotalUserAccounts, encryptedTotalUserAccounts);
-                myItem.TotalUserAccounts = encryptedTotalUserAccounts;
+                myItem.TotalUserAccounts = encryptedTotalUserAccounts;*/
 
                 // Thêm myItem vào danh sách mã hóa
                 encryptMyData.Add(myItem);
@@ -211,7 +215,7 @@ namespace BankingRank
             MessageBox.Show("Encrypt successfully!");
 
 
-
+            /*
             
             // Đẩy lên cloud
             IMongoDatabase database = client.GetDatabase("Crypto");
@@ -370,39 +374,6 @@ namespace BankingRank
             // Tạo CKKSEncoder thay vì BatchEncoder
             CKKSEncoder encoder = new CKKSEncoder(context);
 
-            // Decrypt
-            string jsonData = File.ReadAllText("down.json");
-            JArray jsonArray = JArray.Parse(jsonData);
-
-            List<mydata_encrypt> creditData = new List<mydata_encrypt>();
-
-            foreach (JObject item in jsonArray)
-            {
-                mydata_encrypt data = new mydata_encrypt();
-                data.CCCD = item["CCCD"].ToObject<byte[]>();
-                data.Name = item["Name"].ToObject<byte[]>();
-
-                JObject loanCountObject = (JObject)item["LoanCount"];
-
-                // Tạo MemoryPoolHandle từ JSON data
-                MemoryPoolHandle memoryPool = MemoryPoolHandle.Create(
-                    (int)loanCountObject["Pool"]["PoolCount"],
-                    (long)loanCountObject["Pool"]["AllocByteCount"],
-                    (int)loanCountObject["Pool"]["UseCount"],
-                    (bool)loanCountObject["Pool"]["IsInitialized"],
-                    (bool)loanCountObject["Pool"]["IsDisposed"]
-                );
-                Ciphertext ciphertext = new Ciphertext(context);
-
-                creditData.Add(data);
-            }
-
-
-
-
-            MessageBox.Show("Success");
-
-            /*
             // Đọc private key từ file "pri.txt"
             string prikeyHex = File.ReadAllText("pri.txt");
             byte[] prikeyByteSEAL = Enumerable.Range(0, prikeyHex.Length)
@@ -410,7 +381,7 @@ namespace BankingRank
                                         .Select(x => Convert.ToByte(prikeyHex.Substring(x, 2), 16))
                                         .ToArray();
 
-            // Đọc public key từ file "private_keyRSA.txt"
+            // Đọc private key từ file "private_keyRSA.txt"
             string privateKeyHexRSA = File.ReadAllText("private_keyRSA.txt");
             // Chuyển đổi chuỗi hex thành mảng byte
             byte[] privateKeyBytesRSA = new byte[privateKeyHexRSA.Length / 2];
@@ -422,12 +393,13 @@ namespace BankingRank
             // Khởi tạo RSA từ modulus và exponent
             RSAParameters rsaParameters = new RSAParameters();
             rsaParameters.Modulus = privateKeyBytesRSA; // Gán modulus từ chuỗi hex
-            rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Giả sử một số exponent cụ thể, bạn cần thay đổi nếu cần
+            rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Giả sử exponent cụ thể, bạn cần thay đổi nếu cần
+
+            // Khởi tạo RSACryptoServiceProvider và nhập private key
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
             rsa.ImportParameters(rsaParameters);
 
 
-           
 
             // Tạo PublicKey mới và đọc khóa công khai từ byte array
             Microsoft.Research.SEAL.SecretKey privateSEAL = new Microsoft.Research.SEAL.SecretKey();
@@ -437,8 +409,70 @@ namespace BankingRank
             }
 
             Decryptor decryptor = new Decryptor(context, privateSEAL);
+
+
+            // Decrypt
+            string jsonData = File.ReadAllText("down.json");
+          
+            // Deserialize dữ liệu từ JSON trở về Ciphertext
+            List<mydata_encrypt> decryptedCiphertext = Newtonsoft.Json.JsonConvert.DeserializeObject<List<mydata_encrypt>>(jsonData);
+            List<MyData> resultDecrypt = new List<MyData>();
+            foreach (mydata_encrypt itemEncrypt in decryptedCiphertext)
+            {
+                MyData resultItem = new MyData();
+                byte[] nametoEn = itemEncrypt.Name;
+                byte[] CCCDtoEn = itemEncrypt.CCCD;
+
+                byte[] decryptedBytesName = rsa.Decrypt(nametoEn, true);
+                string nameDe = System.Text.Encoding.UTF8.GetString(decryptedBytesName);
+
+                byte[] decryptedBytesCCCD = rsa.Decrypt(CCCDtoEn, false);
+                string CCCDDe = System.Text.Encoding.UTF8.GetString(decryptedBytesCCCD);
+               
+                // Giải mã LoanCount
+                Ciphertext ciphertextLoanCount = new Ciphertext(itemEncrypt.LoanCount);
+                Plaintext plaintextLoanCount = new Plaintext();
+                decryptor.Decrypt(ciphertextLoanCount, plaintextLoanCount);
+
+
+                // Trích xuất giá trị của LoanCount
+                List<double> loanCountList = new List<double>();
+                encoder.Decode(plaintextLoanCount, loanCountList, null);
+                int loanCount = (int)loanCountList[0];
+
+                resultItem.Name = "Decrypt";
+                resultItem.LoanCount = loanCount;
+                resultItem.CCCD = "Decrypt";
+
+                resultDecrypt.Add(resultItem);
+
+
+
+            }
+
+
+            // Cấu hình JsonSerializerOptions
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            // Serialize đối tượng MyData thành chuỗi JSON
+            string jsonDataOut = System.Text.Json.JsonSerializer.Serialize(resultDecrypt, options);
+
+            // Ghi chuỗi JSON vào file
+            File.WriteAllText("output.json", jsonData);
+
+
+
+
+            MessageBox.Show("Success");
+
+            
+            
            
-            */
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
