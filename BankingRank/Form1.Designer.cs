@@ -69,6 +69,8 @@
             pubName = new TextBox();
             label8 = new Label();
             priName = new TextBox();
+            richTextBox1 = new RichTextBox();
+            richTextBox2 = new RichTextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -104,6 +106,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.White;
+            tabPage1.Controls.Add(richTextBox1);
             tabPage1.Controls.Add(button5);
             tabPage1.Controls.Add(textBox3);
             tabPage1.Controls.Add(label4);
@@ -117,6 +120,7 @@
             tabPage1.Size = new Size(971, 445);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Upload data";
+            tabPage1.Click += tabPage1_Click;
             // 
             // button5
             // 
@@ -296,6 +300,7 @@
             // tabPage3
             // 
             tabPage3.BackColor = Color.White;
+            tabPage3.Controls.Add(richTextBox2);
             tabPage3.Controls.Add(button6);
             tabPage3.Controls.Add(textBox4);
             tabPage3.Controls.Add(label5);
@@ -500,6 +505,22 @@
             priName.Size = new Size(444, 30);
             priName.TabIndex = 10;
             // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new Point(12, 237);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(911, 175);
+            richTextBox1.TabIndex = 7;
+            richTextBox1.Text = "";
+            // 
+            // richTextBox2
+            // 
+            richTextBox2.Location = new Point(26, 231);
+            richTextBox2.Name = "richTextBox2";
+            richTextBox2.Size = new Size(911, 175);
+            richTextBox2.TabIndex = 11;
+            richTextBox2.Text = "";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -568,5 +589,7 @@
         private TextBox textBox6;
         private Label label13;
         private TextBox textBox9;
+        private RichTextBox richTextBox1;
+        private RichTextBox richTextBox2;
     }
 }

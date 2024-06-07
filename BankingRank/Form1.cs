@@ -18,13 +18,16 @@ using System.Buffers;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Text.Json;
 using System.Xml.Linq;
+using System.Runtime.InteropServices;
 
 namespace BankingRank
 {
     public partial class Form1 : Form
     {
 
-        MongoClient client = new MongoClient("mongodb+srv://22521303:NDTan1303uit%3E%3E@cluster0.hhv63yx.mongodb.net/");
+       // MongoClient client = new MongoClient("mongodb+srv://22521303:NDTan1303uit%3E%3E@cluster0.hhv63yx.mongodb.net/");
+
+
 
         static void SaveKeyToFile(string filePath, string key)
         {
@@ -46,14 +49,14 @@ namespace BankingRank
 
 
 
-     
 
-      
 
-  
+
+
+
         private async void button2_Click(object sender, EventArgs e)
         {
-            
+
             // Đọc dữ liệu JSON từ file
             string jsonData = File.ReadAllText(textBox1.Text);
             List<MyData> creditData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyData>>(jsonData);
@@ -73,13 +76,20 @@ namespace BankingRank
             {
                 publicKeyBytesRSA[i / 2] = Convert.ToByte(publicKeyHexRSA.Substring(i, 2), 16);
             }
-
-            // Khởi tạo RSA từ modulus và exponent
-            RSAParameters rsaParameters = new RSAParameters();
-            rsaParameters.Modulus = publicKeyBytesRSA; // Gán modulus từ chuỗi hex
-            rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Giả sử một số exponent cụ thể, bạn cần thay đổi nếu cần
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            // Khởi tạo RSAParameters
+            RSAParameters rsaParameters = new RSAParameters
+            {
+                Modulus = publicKeyBytesRSA,
+                Exponent = new byte[] { 0x01, 0x00, 0x01 } // Exponent thường là 3 byte
+            };
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(3072);
             rsa.ImportParameters(rsaParameters);
+
+
+
+
+
+
 
             // Thiết lập tham số mã hóa
             EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
@@ -124,6 +134,8 @@ namespace BankingRank
                 }
                 myItem.CCCD = encryptedAttributes[0];
                 myItem.Name = encryptedAttributes[1];
+
+                //byte hex
 
 
                 // Mã hóa số lượng khoản vay sử dụng bộ mã hóa đã cung cấp
@@ -201,16 +213,23 @@ namespace BankingRank
                 encryptMyData.Add(myItem);
             }
 
+
+            foreach (mydata_encrypt itemSub in encryptMyData)
+            {
+               
+                richTextBox1.Text += "Encrypted Data: " + BitConverter.ToString(itemSub.CCCD) + "\n\n";
+            }
+
             // Lưu dữ liệu mã hóa vào file JSON
             string jsonDataRe = Newtonsoft.Json.JsonConvert.SerializeObject(encryptMyData, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText("encrypted_data.json", jsonDataRe);
+            File.WriteAllText("down.json", jsonDataRe);
 
 
 
-            
 
 
-            
+
+
 
             MessageBox.Show("Encrypt successfully!");
 
@@ -326,6 +345,17 @@ namespace BankingRank
 
         }
 
+        private static byte[] ConvertHexToBytes(string hex)
+        {
+            hex = hex.Replace("-", "");
+            byte[] bytes = new byte[hex.Length / 2];
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                bytes[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
+            }
+            return bytes;
+        }
+
         private void button3_Click_1(object sender, EventArgs e)
         {/*
             IMongoDatabase database = client.GetDatabase("Crypto");
@@ -381,23 +411,24 @@ namespace BankingRank
                                         .Select(x => Convert.ToByte(prikeyHex.Substring(x, 2), 16))
                                         .ToArray();
 
+
             // Đọc private key từ file "private_keyRSA.txt"
             string privateKeyHexRSA = File.ReadAllText("private_keyRSA.txt");
-            // Chuyển đổi chuỗi hex thành mảng byte
-            byte[] privateKeyBytesRSA = new byte[privateKeyHexRSA.Length / 2];
-            for (int i = 0; i < privateKeyHexRSA.Length; i += 2)
-            {
-                privateKeyBytesRSA[i / 2] = Convert.ToByte(privateKeyHexRSA.Substring(i, 2), 16);
-            }
 
-            // Khởi tạo RSA từ modulus và exponent
+            // Chuyển đổi chuỗi hex sang mảng byte
+            byte[] privateKeyBytesRSA = HexToBytes(privateKeyHexRSA);
+
+            // Khởi tạo RSAParameters
             RSAParameters rsaParameters = new RSAParameters();
-            rsaParameters.Modulus = privateKeyBytesRSA; // Gán modulus từ chuỗi hex
-            rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Giả sử exponent cụ thể, bạn cần thay đổi nếu cần
+            int modulusLength = 384; // Độ dài Modulus thường là 256 hoặc 512 byte, tùy thuộc vào kích thước khóa RSA
+            rsaParameters.Modulus = new byte[modulusLength];
+            Array.Copy(privateKeyBytesRSA, rsaParameters.Modulus, modulusLength);
+            rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Exponent thường là 3 byte
 
-            // Khởi tạo RSACryptoServiceProvider và nhập private key
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(3072);
             rsa.ImportParameters(rsaParameters);
+
+
 
 
 
@@ -413,22 +444,50 @@ namespace BankingRank
 
             // Decrypt
             string jsonData = File.ReadAllText("down.json");
-          
+
             // Deserialize dữ liệu từ JSON trở về Ciphertext
             List<mydata_encrypt> decryptedCiphertext = Newtonsoft.Json.JsonConvert.DeserializeObject<List<mydata_encrypt>>(jsonData);
+
+            foreach (mydata_encrypt item in decryptedCiphertext)
+            {
+                richTextBox2.Text = BitConverter.ToString(item.CCCD);
+                MessageBox.Show("Suc");
+                byte[] demo = HexToBytes(BitConverter.ToString(item.CCCD));
+
+              byte[] decryptedBytesName = rsa.Decrypt(demo, false);
+                //string nameDe = System.Text.Encoding.UTF8.GetString(decryptedBytesName);
+
+                //richTextBox2.Clear();
+                //richTextBox2.Text = nameDe;
+                
+
+            }
+
+
+
+            /*
             List<MyData> resultDecrypt = new List<MyData>();
             foreach (mydata_encrypt itemEncrypt in decryptedCiphertext)
             {
                 MyData resultItem = new MyData();
+
+
+
+
                 byte[] nametoEn = itemEncrypt.Name;
                 byte[] CCCDtoEn = itemEncrypt.CCCD;
 
-                byte[] decryptedBytesName = rsa.Decrypt(nametoEn, true);
+                byte[] decryptedBytesName = rsa.Decrypt(nametoEn, false);
                 string nameDe = System.Text.Encoding.UTF8.GetString(decryptedBytesName);
 
                 byte[] decryptedBytesCCCD = rsa.Decrypt(CCCDtoEn, false);
                 string CCCDDe = System.Text.Encoding.UTF8.GetString(decryptedBytesCCCD);
-               
+
+                MessageBox.Show("hai");
+
+
+
+
                 // Giải mã LoanCount
                 Ciphertext ciphertextLoanCount = new Ciphertext(itemEncrypt.LoanCount);
                 Plaintext plaintextLoanCount = new Plaintext();
@@ -465,14 +524,14 @@ namespace BankingRank
             File.WriteAllText("output.json", jsonData);
 
 
-
+            */
 
             MessageBox.Show("Success");
 
-            
-            
-           
-            
+
+
+
+
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -499,7 +558,7 @@ namespace BankingRank
         {
             // RSA
             // Generate RSA key pair
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(2048);
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(3072);
             string publicKeyRSA = rsa.ToXmlString(false);
             string privateKeyRSA = rsa.ToXmlString(true);
 
@@ -556,6 +615,34 @@ namespace BankingRank
 
             string fileName1 = System.IO.Path.GetFileName(ofd.FileName);
             textBox3.Text = fileName1;
+        }
+
+        public static byte[] HexToBytes(string hexString)
+        {
+            // Kiểm tra xem chuỗi Hex có hợp lệ không
+            if (string.IsNullOrEmpty(hexString))
+            {
+                return new byte[0];
+            }
+
+            // Xóa bỏ các ký tự không hợp lệ (không phải là ký tự hex)
+            hexString = new string(hexString.Where(char.IsLetterOrDigit).ToArray());
+
+            // Tạo mảng byte với độ dài bằng một nửa độ dài của chuỗi Hex
+            byte[] bytes = new byte[hexString.Length / 2];
+
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                // Chuyển đổi từng cặp ký tự Hex thành giá trị byte
+                bytes[i] = byte.Parse(hexString.Substring(i * 2, 2), System.Globalization.NumberStyles.HexNumber);
+            }
+
+            return bytes;
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
