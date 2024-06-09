@@ -18,16 +18,83 @@ using System.Buffers;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Text.Json;
 using System.Xml.Linq;
-using System.Runtime.InteropServices;
-
+using System.Security.Cryptography.Xml;
+using Newtonsoft.Json;
 namespace BankingRank
 {
     public partial class Form1 : Form
     {
+        private static string ConvertCiphertextsToBase64(Ciphertext ciphertext)
+        {
+            StringBuilder base64StringBuilder = new StringBuilder();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ciphertext.Save(ms);
+                base64StringBuilder.Append(Convert.ToBase64String(ms.ToArray()));
+            }
 
-       // MongoClient client = new MongoClient("mongodb+srv://22521303:NDTan1303uit%3E%3E@cluster0.hhv63yx.mongodb.net/");
+            return base64StringBuilder.ToString();
+        }
 
 
+
+        private static List<Ciphertext> ConvertBase64ToCiphertexts(List<string> base64List, SEALContext context)
+        {
+            List<Ciphertext> ciphertexts = new List<Ciphertext>(base64List.Count);
+            foreach (var base64 in base64List)
+            {
+                Ciphertext ciphertext = new Ciphertext();
+                byte[] bytes = Convert.FromBase64String(base64);
+                using (MemoryStream ms = new MemoryStream(bytes))
+                {
+                    ciphertext.Load(context, ms);
+                }
+                ciphertexts.Add(ciphertext);
+            }
+            return ciphertexts;
+        }
+
+
+
+        
+
+        private static void SaveKey(string fileName, Microsoft.Research.SEAL.PublicKey key)
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                key.Save(fs);
+            }
+        }
+
+        private static void SaveKey(string fileName, SecretKey key)
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                key.Save(fs);
+            }
+        }
+
+        private static Microsoft.Research.SEAL.PublicKey LoadPublicKey(string fileName, SEALContext context)
+        {
+            Microsoft.Research.SEAL.PublicKey publicKey = new Microsoft.Research.SEAL.PublicKey();
+            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            {
+                publicKey.Load(context, fs);
+            }
+            return publicKey;
+        }
+
+        private static SecretKey LoadSecretKey(string fileName, SEALContext context)
+        {
+            SecretKey secretKey = new SecretKey();
+            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            {
+                secretKey.Load(context, fs);
+            }
+            return secretKey;
+        }
+
+        MongoClient client = new MongoClient("mongodb+srv://22521303:NDTan1303uit%3E%3E@cluster0.hhv63yx.mongodb.net/");
 
         static void SaveKeyToFile(string filePath, string key)
         {
@@ -38,7 +105,6 @@ namespace BankingRank
         public Form1()
         {
             InitializeComponent();
-
 
         }
 
@@ -51,45 +117,38 @@ namespace BankingRank
 
 
 
+        private static byte[] EncryptString(string input)
+        {
+            // Implement the encryption logic for strings
+            return System.Text.Encoding.UTF8.GetBytes(input); // This is just a placeholder
+        }
 
+        private static string EncryptDouble(CKKSEncoder encoder, Encryptor encryptor, double value, double scale)
+        {
+            Plaintext plainData = new Plaintext();
+            encoder.Encode(value, scale, plainData);
+            Ciphertext encryptedData = new Ciphertext();
+            encryptor.Encrypt(plainData, encryptedData);
 
+            return ConvertCiphertextToBase64(encryptedData);
+        }
+        private static string ConvertCiphertextToBase64(Ciphertext ciphertext)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ciphertext.Save(ms);
+                return Convert.ToBase64String(ms.ToArray());
+            }
+        }
 
         private async void button2_Click(object sender, EventArgs e)
         {
 
             // Đọc dữ liệu JSON từ file
-            string jsonData = File.ReadAllText(textBox1.Text);
+            string jsonData = File.ReadAllText(textBox1.Text.ToString());
             List<MyData> creditData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyData>>(jsonData);
 
-            // Đọc public key từ file "pub.txt"
-            string publicKeyHex = File.ReadAllText(textBox3.Text);
-            byte[] publicKeyByte = Enumerable.Range(0, publicKeyHex.Length)
-                                        .Where(x => x % 2 == 0)
-                                        .Select(x => Convert.ToByte(publicKeyHex.Substring(x, 2), 16))
-                                        .ToArray();
-
-            // Đọc public key từ file "public_keyRSA.txt"
-            string publicKeyHexRSA = File.ReadAllText("public_keyRSA.txt");
-            // Chuyển đổi chuỗi hex thành mảng byte
-            byte[] publicKeyBytesRSA = new byte[publicKeyHexRSA.Length / 2];
-            for (int i = 0; i < publicKeyHexRSA.Length; i += 2)
-            {
-                publicKeyBytesRSA[i / 2] = Convert.ToByte(publicKeyHexRSA.Substring(i, 2), 16);
-            }
-            // Khởi tạo RSAParameters
-            RSAParameters rsaParameters = new RSAParameters
-            {
-                Modulus = publicKeyBytesRSA,
-                Exponent = new byte[] { 0x01, 0x00, 0x01 } // Exponent thường là 3 byte
-            };
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(3072);
-            rsa.ImportParameters(rsaParameters);
-
-
-
-
-
-
+           
 
             // Thiết lập tham số mã hóa
             EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
@@ -103,20 +162,20 @@ namespace BankingRank
             CKKSEncoder encoder = new CKKSEncoder(context);
 
             // Tạo PublicKey mới và đọc khóa công khai từ byte array
-            Microsoft.Research.SEAL.PublicKey publicKeySEAL = new Microsoft.Research.SEAL.PublicKey();
-            using (var ms = new MemoryStream(publicKeyByte))
-            {
-                publicKeySEAL.Load(context, ms);
-            }
-
+            Microsoft.Research.SEAL.PublicKey publicKeySEAL = LoadPublicKey(textBox3.Text.ToString(), context);
 
             Encryptor encryptor = new Encryptor(context, publicKeySEAL);
+            double scale = Math.Pow(2.0, 40);
 
             // Mã hóa dữ liệu
             List<Ciphertext> encryptedData = new List<Ciphertext>();
             List<mydata_encrypt> encryptMyData = new List<mydata_encrypt>();
+
+            // Encrypting data for multiple individuals
+            List<mydata_encrypt> encryptedIndividualsData = new List<mydata_encrypt>();
             foreach (var data in creditData)
             {
+                List<string> base64Ciphertexts = new List<string>();
                 mydata_encrypt myItem = new mydata_encrypt();
                 List<string> attributes = new List<string>
                 {
@@ -124,124 +183,111 @@ namespace BankingRank
                     data.CCCD.ToString()
 
                 };
-                List<byte[]> encryptedAttributes = new List<byte[]>();
-                for (int i = 0; i < attributes.Count; i++)
-                {
-
-                    // Mã hóa dữ liệu sử dụng RSA với public key
-                    byte[] encryptedBytes = rsa.Encrypt(Encoding.UTF8.GetBytes(attributes[i]), false);
-                    encryptedAttributes.Add(encryptedBytes);
-                }
-                myItem.CCCD = encryptedAttributes[0];
-                myItem.Name = encryptedAttributes[1];
-
-                //byte hex
-
-
-                // Mã hóa số lượng khoản vay sử dụng bộ mã hóa đã cung cấp
-                Plaintext plainData = new Plaintext();
-                encoder.Encode(data.LoanCount, plainData);
-                Ciphertext encryptedDataItem = new Ciphertext();
-                encryptor.Encrypt(plainData, encryptedDataItem);
-                myItem.LoanCount = encryptedDataItem;
-
-                /*
-                // Mã hóa số lượng khoản trả chậm
-                Plaintext plainLatePaymentCount = new Plaintext();
-                encoder.Encode(data.LatePaymentCount, plainLatePaymentCount);
-                Ciphertext encryptedLatePaymentCount = new Ciphertext();
-                encryptor.Encrypt(plainLatePaymentCount, encryptedLatePaymentCount);
-                myItem.LatePaymentCount = encryptedLatePaymentCount;
-
-                // Mã hóa số tiền nợ
-                Plaintext plainDebtAmount = new Plaintext();
-                encoder.Encode(data.DebtAmount, plainDebtAmount);
-                Ciphertext encryptedDebtAmount = new Ciphertext();
-                encryptor.Encrypt(plainDebtAmount, encryptedDebtAmount);
-                myItem.DebtAmount = encryptedDebtAmount;
-
-                // Mã hóa giá trị tài sản
-                Plaintext plainAssetValue = new Plaintext();
-                encoder.Encode(data.AssetValue, plainAssetValue);
-                Ciphertext encryptedAssetValue = new Ciphertext();
-                encryptor.Encrypt(plainAssetValue, encryptedAssetValue);
-                myItem.AssetValue = encryptedAssetValue;
-
-                // Mã hóa thời gian sử dụng dịch vụ
-                Plaintext plainServiceUsageTime = new Plaintext();
-                encoder.Encode(data.ServiceUsageTime, plainServiceUsageTime);
-                Ciphertext encryptedServiceUsageTime = new Ciphertext();
-                encryptor.Encrypt(plainServiceUsageTime, encryptedServiceUsageTime);
-                myItem.ServiceUsageTime = encryptedServiceUsageTime;
-
-                // Mã hóa tổng thời gian kể từ khi mở thẻ
-                Plaintext plainTotalTimeSinceCardOpened = new Plaintext();
-                encoder.Encode(data.TotalTimeSinceCardOpened, plainTotalTimeSinceCardOpened);
-                Ciphertext encryptedTotalTimeSinceCardOpened = new Ciphertext();
-                encryptor.Encrypt(plainTotalTimeSinceCardOpened, encryptedTotalTimeSinceCardOpened);
-                myItem.TotalTimeSinceCardOpened = encryptedTotalTimeSinceCardOpened;
-
-                // Mã hóa số loại tín dụng
-                Plaintext plainCreditTypeCount = new Plaintext();
-                encoder.Encode(data.CreditTypeCount, plainCreditTypeCount);
-                Ciphertext encryptedCreditTypeCount = new Ciphertext();
-                encryptor.Encrypt(plainCreditTypeCount, encryptedCreditTypeCount);
-                myItem.CreditTypeCount = encryptedCreditTypeCount;
-
-                // Mã hóa tổng số loại tín dụng
-                Plaintext plainTotalCreditTypeCount = new Plaintext();
-                encoder.Encode(data.TotalCreditTypeCount, plainTotalCreditTypeCount);
-                Ciphertext encryptedTotalCreditTypeCount = new Ciphertext();
-                encryptor.Encrypt(plainTotalCreditTypeCount, encryptedTotalCreditTypeCount);
-                myItem.TotalCreditTypeCount = encryptedTotalCreditTypeCount;
-
-                // Mã hóa số tài khoản mới trong tháng
-                Plaintext plainNewAccountsInMonth = new Plaintext();
-                encoder.Encode(data.NewAccountsInMonth, plainNewAccountsInMonth);
-                Ciphertext encryptedNewAccountsInMonth = new Ciphertext();
-                encryptor.Encrypt(plainNewAccountsInMonth, encryptedNewAccountsInMonth);
-                myItem.NewAccountsInMonth = encryptedNewAccountsInMonth;
-
-                // Mã hóa tổng số tài khoản người dùng
-                Plaintext plainTotalUserAccounts = new Plaintext();
-                encoder.Encode(data.TotalUserAccounts, plainTotalUserAccounts);
-                Ciphertext encryptedTotalUserAccounts = new Ciphertext();
-                encryptor.Encrypt(plainTotalUserAccounts, encryptedTotalUserAccounts);
-                myItem.TotalUserAccounts = encryptedTotalUserAccounts;*/
-
-                // Thêm myItem vào danh sách mã hóa
-                encryptMyData.Add(myItem);
-            }
-
-
-            foreach (mydata_encrypt itemSub in encryptMyData)
-            {
                
-                richTextBox1.Text += "Encrypted Data: " + BitConverter.ToString(itemSub.CCCD) + "\n\n";
+                
+               
+                Plaintext plain = new Plaintext();
+                Ciphertext encrypted;
+                double doubleValue;
+                encoder.Encode(data.LatePaymentCount, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                doubleValue = data.LoanCount;
+                encoder.Encode(1 / doubleValue, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                encoder.Encode(data.DebtAmount, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                doubleValue = data.AssetValue;
+                encoder.Encode(1 / doubleValue, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                encoder.Encode(data.ServiceUsageTime, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                doubleValue = data.TotalTimeSinceCardOpened;
+                encoder.Encode(1 / doubleValue, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                encoder.Encode(data.CreditTypeCount, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                doubleValue = data.TotalCreditTypeCount;
+                encoder.Encode(1 / doubleValue, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                encoder.Encode(data.NewAccountsInMonth, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                doubleValue = data.TotalUserAccounts;
+                encoder.Encode(1 / doubleValue, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                List<double> values_CCCD = Encoding.UTF8.GetBytes(data.CCCD).Select(b => (double)b).ToList();
+                encoder.Encode(values_CCCD, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                List<double> values_name = Encoding.UTF8.GetBytes(data.Name).Select(b => (double)b).ToList();
+                encoder.Encode(values_name, scale, plain);
+                encrypted = new Ciphertext();
+                encryptor.Encrypt(plain, encrypted);
+                base64Ciphertexts.Add(ConvertCiphertextToBase64(encrypted));
+
+                var encryptedDatabasetotext = new mydata_encrypt
+                {
+                    ID = data.ID,
+                    CCCD = base64Ciphertexts[10],
+                    Name = base64Ciphertexts[11],
+                    LatePaymentCount = base64Ciphertexts[0],
+                    LoanCount = base64Ciphertexts[1],
+                    DebtAmount = base64Ciphertexts[2],
+                    AssetValue = base64Ciphertexts[3],
+                    ServiceUsageTime = base64Ciphertexts[4],
+                    TotalTimeSinceCardOpened = base64Ciphertexts[5],
+                    CreditTypeCount = base64Ciphertexts[6],
+                    TotalCreditTypeCount = base64Ciphertexts[7],
+                    NewAccountsInMonth = base64Ciphertexts[8],
+                    TotalUserAccounts = base64Ciphertexts[9]
+                };
+                encryptedIndividualsData.Add(encryptedDatabasetotext);
+
             }
 
-            // Lưu dữ liệu mã hóa vào file JSON
-            string jsonDataRe = Newtonsoft.Json.JsonConvert.SerializeObject(encryptMyData, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText("down.json", jsonDataRe);
-
-
-
-
-
-
-
-
+            // Serialize list of encrypted data objects to JSON
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(encryptedIndividualsData, Formatting.Indented);
+            File.WriteAllText("data.json", json);
             MessageBox.Show("Encrypt successfully!");
 
 
-            /*
-            
             // Đẩy lên cloud
             IMongoDatabase database = client.GetDatabase("Crypto");
-            IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("Test");
+            IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("BankingInfo");
 
             // Đọc dữ liệu từ file JSON
-            string jsonDataUp = File.ReadAllText("encrypted_data.json");
+            string jsonDataUp = File.ReadAllText("data.json");
             JArray jsonArray = JArray.Parse(jsonDataUp);
 
             foreach (JObject obj in jsonArray)
@@ -337,7 +383,7 @@ namespace BankingRank
                 });
             }
             MessageBox.Show("Dữ liệu đã được đẩy lên MongoDB.");
-            */
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -345,203 +391,12 @@ namespace BankingRank
 
         }
 
-        private static byte[] ConvertHexToBytes(string hex)
-        {
-            hex = hex.Replace("-", "");
-            byte[] bytes = new byte[hex.Length / 2];
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                bytes[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
-            }
-            return bytes;
-        }
+    
 
-        private void button3_Click_1(object sender, EventArgs e)
-        {/*
-            IMongoDatabase database = client.GetDatabase("Crypto");
-            IMongoCollection<BsonDocument> collection = database.GetCollection<BsonDocument>("Test");
-
-            // Truy vấn dữ liệu từ MongoDB, không lấy trường "_id"
-            var documents = collection.Find(FilterDefinition<BsonDocument>.Empty)
-                                     .Project(Builders<BsonDocument>.Projection.Exclude("_id"))
-                                     .ToList();
-
-            // Định dạng lại JSON output
-            var jsonWriterSettings = new JsonWriterSettings
-            {
-                Indent = true,
-                OutputMode = JsonOutputMode.Strict
-            };
-            static string FormatBsonDocument(BsonDocument doc, JsonWriterSettings settings)
-            {
-                var json = doc.ToJson(settings);
-
-                // Định dạng lại các trường có dạng "$numberDecimal"
-                json = Regex.Replace(json, @"\{\s*""?\$numberDecimal""?\s*:\s*""?([-+]?\d+(?:\.\d+)?)""?\s*\}", m => $"{m.Groups[1].Value}");
-
-                return json;
-            }
-
-            var jsonData = "[\n" + string.Join(",\n", documents.Select(doc => FormatBsonDocument(doc, jsonWriterSettings))) + "\n]";
 
            
-            // Lưu dữ liệu JSON vào file
-            File.WriteAllText("down.json", jsonData);
 
-
-
-            MessageBox.Show("Dữ liệu đã được tải về file 'customer_data.json'.");
-            */
-
-            // Thiết lập tham số mã hóa
-            EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
-            ulong polyModulusDegree = 8192;
-            parms.PolyModulusDegree = polyModulusDegree;
-            parms.CoeffModulus = CoeffModulus.Create(polyModulusDegree, new int[] { 60, 40, 40, 60 });
-
-            // Tạo ngữ cảnh mã hóa
-            SEALContext context = new SEALContext(parms);
-            // Tạo CKKSEncoder thay vì BatchEncoder
-            CKKSEncoder encoder = new CKKSEncoder(context);
-
-            // Đọc private key từ file "pri.txt"
-            string prikeyHex = File.ReadAllText("pri.txt");
-            byte[] prikeyByteSEAL = Enumerable.Range(0, prikeyHex.Length)
-                                        .Where(x => x % 2 == 0)
-                                        .Select(x => Convert.ToByte(prikeyHex.Substring(x, 2), 16))
-                                        .ToArray();
-
-
-            // Đọc private key từ file "private_keyRSA.txt"
-            string privateKeyHexRSA = File.ReadAllText("private_keyRSA.txt");
-
-            // Chuyển đổi chuỗi hex sang mảng byte
-            byte[] privateKeyBytesRSA = HexToBytes(privateKeyHexRSA);
-
-            // Khởi tạo RSAParameters
-            RSAParameters rsaParameters = new RSAParameters();
-            int modulusLength = 384; // Độ dài Modulus thường là 256 hoặc 512 byte, tùy thuộc vào kích thước khóa RSA
-            rsaParameters.Modulus = new byte[modulusLength];
-            Array.Copy(privateKeyBytesRSA, rsaParameters.Modulus, modulusLength);
-            rsaParameters.Exponent = new byte[] { 0x01, 0x00, 0x01 }; // Exponent thường là 3 byte
-
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(3072);
-            rsa.ImportParameters(rsaParameters);
-
-
-
-
-
-            // Tạo PublicKey mới và đọc khóa công khai từ byte array
-            Microsoft.Research.SEAL.SecretKey privateSEAL = new Microsoft.Research.SEAL.SecretKey();
-            using (var ms = new MemoryStream(prikeyByteSEAL))
-            {
-                privateSEAL.Load(context, ms);
-            }
-
-            Decryptor decryptor = new Decryptor(context, privateSEAL);
-
-
-            // Decrypt
-            string jsonData = File.ReadAllText("down.json");
-
-            // Deserialize dữ liệu từ JSON trở về Ciphertext
-            List<mydata_encrypt> decryptedCiphertext = Newtonsoft.Json.JsonConvert.DeserializeObject<List<mydata_encrypt>>(jsonData);
-
-            foreach (mydata_encrypt item in decryptedCiphertext)
-            {
-                richTextBox2.Text = BitConverter.ToString(item.CCCD);
-                MessageBox.Show("Suc");
-                byte[] demo = HexToBytes(BitConverter.ToString(item.CCCD));
-
-              byte[] decryptedBytesName = rsa.Decrypt(demo, false);
-                //string nameDe = System.Text.Encoding.UTF8.GetString(decryptedBytesName);
-
-                //richTextBox2.Clear();
-                //richTextBox2.Text = nameDe;
-                
-
-            }
-
-
-
-            /*
-            List<MyData> resultDecrypt = new List<MyData>();
-            foreach (mydata_encrypt itemEncrypt in decryptedCiphertext)
-            {
-                MyData resultItem = new MyData();
-
-
-
-
-                byte[] nametoEn = itemEncrypt.Name;
-                byte[] CCCDtoEn = itemEncrypt.CCCD;
-
-                byte[] decryptedBytesName = rsa.Decrypt(nametoEn, false);
-                string nameDe = System.Text.Encoding.UTF8.GetString(decryptedBytesName);
-
-                byte[] decryptedBytesCCCD = rsa.Decrypt(CCCDtoEn, false);
-                string CCCDDe = System.Text.Encoding.UTF8.GetString(decryptedBytesCCCD);
-
-                MessageBox.Show("hai");
-
-
-
-
-                // Giải mã LoanCount
-                Ciphertext ciphertextLoanCount = new Ciphertext(itemEncrypt.LoanCount);
-                Plaintext plaintextLoanCount = new Plaintext();
-                decryptor.Decrypt(ciphertextLoanCount, plaintextLoanCount);
-
-
-                // Trích xuất giá trị của LoanCount
-                List<double> loanCountList = new List<double>();
-                encoder.Decode(plaintextLoanCount, loanCountList, null);
-                int loanCount = (int)loanCountList[0];
-
-                resultItem.Name = "Decrypt";
-                resultItem.LoanCount = loanCount;
-                resultItem.CCCD = "Decrypt";
-
-                resultDecrypt.Add(resultItem);
-
-
-
-            }
-
-
-            // Cấu hình JsonSerializerOptions
-            var options = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
-
-            // Serialize đối tượng MyData thành chuỗi JSON
-            string jsonDataOut = System.Text.Json.JsonSerializer.Serialize(resultDecrypt, options);
-
-            // Ghi chuỗi JSON vào file
-            File.WriteAllText("output.json", jsonData);
-
-
-            */
-
-            MessageBox.Show("Success");
-
-
-
-
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog ofd = new SaveFileDialog();
-            ofd.ShowDialog(this);
-
-            string fileName1 = System.IO.Path.GetFileName(ofd.FileName);
-            textBox2.Text = fileName1;
-        }
+    
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -556,18 +411,7 @@ namespace BankingRank
 
         private void button7_Click(object sender, EventArgs e)
         {
-            // RSA
-            // Generate RSA key pair
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(3072);
-            string publicKeyRSA = rsa.ToXmlString(false);
-            string privateKeyRSA = rsa.ToXmlString(true);
-
-            // Save public and private keys to files in Hex format
-            SaveKeyToFile("public_keyRSA.txt", publicKeyRSA);
-            SaveKeyToFile("private_keyRSA.txt", privateKeyRSA);
-
-
-
+           
             // Thiết lập tham số mã hóa
             EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
             ulong polyModulusDegree = 8192;
@@ -583,23 +427,13 @@ namespace BankingRank
             keygen.CreatePublicKey(out publicKey);
             SecretKey secretKey = keygen.SecretKey;
 
-            // Lưu khóa công khai và bí mật vào file dưới dạng Hex
-            using (var ms = new MemoryStream())
-            {
-                publicKey.Save(ms);
-                string publicKeyHex = BitConverter.ToString(ms.ToArray()).Replace("-", "");
-
-                ms.Position = 0;
-                secretKey.Save(ms);
-                string secretKeyHex = BitConverter.ToString(ms.ToArray()).Replace("-", "");
-
-                File.WriteAllText(priName.Text, secretKeyHex);
-                File.WriteAllText(pubName.Text, publicKeyHex);
-            }
+            // Save the keys to files
+            SaveKey(pubName.Text.ToString(), publicKey);
+            SaveKey(priName.Text.ToString(), secretKey);
 
             // Đọc khóa công khai và bí mật từ file
-            string secret = File.ReadAllText(priName.Text);
-            string publicK = File.ReadAllText(pubName.Text);
+            string secret = File.ReadAllText(priName.Text.ToString());
+            string publicK = File.ReadAllText(pubName.Text.ToString());
 
             // Hiển thị khóa công khai và bí mật lên RichTextBox
             priText.Text = secret;
@@ -617,32 +451,269 @@ namespace BankingRank
             textBox3.Text = fileName1;
         }
 
-        public static byte[] HexToBytes(string hexString)
+        private static Ciphertext ConvertBase64ToCiphertext(string base64, SEALContext context)
         {
-            // Kiểm tra xem chuỗi Hex có hợp lệ không
-            if (string.IsNullOrEmpty(hexString))
+            Ciphertext ciphertext = new Ciphertext();
+            byte[] bytes = Convert.FromBase64String(base64);
+            using (MemoryStream ms = new MemoryStream(bytes))
             {
-                return new byte[0];
+                ciphertext.Load(context, ms);
             }
-
-            // Xóa bỏ các ký tự không hợp lệ (không phải là ký tự hex)
-            hexString = new string(hexString.Where(char.IsLetterOrDigit).ToArray());
-
-            // Tạo mảng byte với độ dài bằng một nửa độ dài của chuỗi Hex
-            byte[] bytes = new byte[hexString.Length / 2];
-
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                // Chuyển đổi từng cặp ký tự Hex thành giá trị byte
-                bytes[i] = byte.Parse(hexString.Substring(i * 2, 2), System.Globalization.NumberStyles.HexNumber);
-            }
-
-            return bytes;
+            return ciphertext;
         }
-
-        private void tabPage1_Click(object sender, EventArgs e)
+        private void button8_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Kết nối MongoDB
+                var client = new MongoClient("mongodb+srv://thailam:uNj5rP3APTnXmDfX@cluster0.hhv63yx.mongodb.net/");
+                var database = client.GetDatabase("Crypto");
+                var collection = database.GetCollection<BsonDocument>("BankingInfo");
 
+                var filter = Builders<BsonDocument>.Filter.Eq("ID", textBox5.Text.ToString());
+                var results = collection.Find(filter).ToList();
+
+                if (results.Count > 0)
+                {
+                    MessageBox.Show("ID found in database.");
+
+                    var people = new List<mydata_encrypt>();
+
+                    foreach (var result in results)
+                    {
+                        var person = new mydata_encrypt
+                        {
+                            ID = result["ID"].AsString,
+                            CCCD = result["CCCD"].AsString,
+                            Name = result["Name"].AsString,
+                            LatePaymentCount = result["LatePaymentCount"].AsString,
+                            LoanCount = result["LoanCount"].AsString,
+                            DebtAmount = result["DebtAmount"].AsString,
+                            AssetValue = result["AssetValue"].AsString,
+                            ServiceUsageTime = result["ServiceUsageTime"].AsString,
+                            TotalTimeSinceCardOpened = result["TotalTimeSinceCardOpened"].AsString,
+                            CreditTypeCount = result["CreditTypeCount"].AsString,
+                            TotalCreditTypeCount = result["TotalCreditTypeCount"].AsString,
+                            NewAccountsInMonth = result["NewAccountsInMonth"].AsString,
+                            TotalUserAccounts = result["TotalUserAccounts"].AsString,
+                        };
+
+                        people.Add(person);
+                    }
+
+                    // Chuyển đổi danh sách các đối tượng Person thành JSON
+                    string json = System.Text.Json.JsonSerializer.Serialize(people, new JsonSerializerOptions { WriteIndented = true });
+
+                    // Lưu JSON vào file
+                    File.WriteAllText("data.json", json);
+                }
+            }
+            catch { 
+            }
+            
+
+               
+
+            // Setting up encryption parameters
+            EncryptionParameters parms = new EncryptionParameters(SchemeType.CKKS);
+            ulong polyModulusDegree = 8192;
+            parms.PolyModulusDegree = polyModulusDegree;
+            parms.CoeffModulus = CoeffModulus.Create(polyModulusDegree, new int[] { 60, 40, 40, 60 });
+
+            double scale = Math.Pow(2.0, 40);
+
+            // Creating context
+            SEALContext context = new SEALContext(parms);
+
+            // Load the keys from files*/
+            Microsoft.Research.SEAL.PublicKey loadedPublicKey = LoadPublicKey("public.key", context);
+            SecretKey loadedSecretKey = LoadSecretKey("secret.key", context);
+
+            Encryptor encryptor = new Encryptor(context, loadedPublicKey);
+            Decryptor decryptor = new Decryptor(context, loadedSecretKey);
+            Evaluator evaluator = new Evaluator(context);
+            CKKSEncoder encoder = new CKKSEncoder(context);
+
+            // Read the JSON file and deserialize
+            string jsonFromFile = File.ReadAllText("data.json");
+            var encryptedDataFromFile = Newtonsoft.Json.JsonConvert.DeserializeObject<List<mydata_encrypt>>(jsonFromFile);
+
+            double[] rank = new double[] { 0.35, 0.3, 0.15, 0.1, 0.1 };
+            // Encrypt rankPoint
+            List<Ciphertext> cipherRank = new List<Ciphertext>(rank.Length);
+            for (int i = 0; i < rank.Length; i++)
+            {
+                Plaintext plain1 = new Plaintext();
+                encoder.Encode(rank[i], scale, plain1);
+                Ciphertext encrypted = new Ciphertext();
+                encryptor.Encrypt(plain1, encrypted);
+                cipherRank.Add(encrypted);
+            }
+
+            Plaintext plain = new Plaintext();
+            Ciphertext CCCD_search;
+            double doubleValue;
+            
+            
+            
+            foreach (var encryptedData in encryptedDataFromFile)
+            {
+                
+
+                
+                    // Convert base64 strings back to Ciphertext objects
+                    List<Ciphertext> ciphertextsFromJson = new List<Ciphertext>
+                    {
+                        ConvertBase64ToCiphertext(encryptedData.LatePaymentCount, context),
+                        ConvertBase64ToCiphertext(encryptedData.LoanCount, context),
+                        ConvertBase64ToCiphertext(encryptedData.DebtAmount, context),
+                        ConvertBase64ToCiphertext(encryptedData.AssetValue, context),
+                        ConvertBase64ToCiphertext(encryptedData.ServiceUsageTime, context),
+                        ConvertBase64ToCiphertext(encryptedData.TotalTimeSinceCardOpened, context),
+                        ConvertBase64ToCiphertext(encryptedData.CreditTypeCount, context),
+                        ConvertBase64ToCiphertext(encryptedData.TotalCreditTypeCount, context),
+                        ConvertBase64ToCiphertext(encryptedData.NewAccountsInMonth, context),
+                        ConvertBase64ToCiphertext(encryptedData.TotalUserAccounts, context),
+                    };
+
+                    // Perform operations as an example (similar to before)
+                    Ciphertext result1 = new Ciphertext();
+                    Ciphertext result2 = new Ciphertext();
+                    Ciphertext finalResult = new Ciphertext();
+
+                    evaluator.Multiply(ciphertextsFromJson[0], ciphertextsFromJson[1], result1);
+                    evaluator.Multiply(cipherRank[0], result1, result1);
+
+                    evaluator.Multiply(ciphertextsFromJson[2], ciphertextsFromJson[3], result2);
+                    evaluator.Multiply(cipherRank[1], result2, result2);
+
+                    // Check scales before addition
+                    if (result1.Scale != result2.Scale)
+                    {
+                        double newScale = Math.Pow(2.0, 40);
+                        result1.Scale = newScale;
+                        result2.Scale = newScale;
+                    }
+
+                    // Perform addition
+                    evaluator.Add(result1, result2, finalResult);
+
+                    evaluator.Multiply(ciphertextsFromJson[4], ciphertextsFromJson[5], result2);
+                    evaluator.Multiply(cipherRank[2], result2, result2);
+
+                    if (result2.Scale != finalResult.Scale)
+                    {
+                        double newScale = Math.Pow(2.0, 40);
+                        result2.Scale = newScale;
+                        finalResult.Scale = newScale;
+                    }
+
+                    evaluator.Add(finalResult, result2, finalResult);
+
+                    evaluator.Multiply(ciphertextsFromJson[6], ciphertextsFromJson[7], result2);
+                    evaluator.Multiply(cipherRank[3], result2, result2);
+
+                    if (result2.Scale != finalResult.Scale)
+                    {
+                        double newScale = Math.Pow(2.0, 40);
+                        result2.Scale = newScale;
+                        finalResult.Scale = newScale;
+                    }
+
+                    evaluator.Add(finalResult, result2, finalResult);
+
+                    evaluator.Multiply(ciphertextsFromJson[8], ciphertextsFromJson[9], result2);
+                    evaluator.Multiply(cipherRank[4], result2, result2);
+
+                    if (result2.Scale != finalResult.Scale)
+                    {
+                        double newScale = Math.Pow(2.0, 40);
+                        result2.Scale = newScale;
+                        finalResult.Scale = newScale;
+                    }
+
+                    evaluator.Add(finalResult, result2, finalResult);
+
+                    // Decrypt and print result
+                    Plaintext decrypted_result = new Plaintext();
+                    decryptor.Decrypt(finalResult, decrypted_result);
+                    List<double> decoded1 = new List<double>();
+                    encoder.Decode(decrypted_result, decoded1);
+                    double res = decoded1[0] * 1000; 
+                    textBox8.Text = res.ToString();
+
+                string mucDoRuiRo = "";
+
+                if (res >= 710 && res <= 999)
+                {
+                    mucDoRuiRo = "Mức độ rủi ro hạng 1";
+                }
+                else if (res >= 680 && res <= 709)
+                {
+                    mucDoRuiRo = "Mức độ rủi ro hạng 2";
+                }
+                else if (res >= 635 && res <= 679)
+                {
+                    mucDoRuiRo = "Mức độ rủi ro hạng 3";
+                }
+                else if (res >= 610 && res <= 634)
+                {
+                    mucDoRuiRo = "Mức độ rủi ro hạng 4";
+                }
+                else if (res >= 560 && res <= 609)
+                {
+                    mucDoRuiRo = "Mức độ rủi ro hạng 5";
+                }
+                else if (res >= 520 && res <= 559)
+                {
+                    mucDoRuiRo = "Mức độ rủi ro hạng 6";
+                }
+                else if (res >= 420 && res <= 519)
+                {
+                    mucDoRuiRo = "Mức độ rủi ro hạng 7";
+                }
+                else if (res >= 1 && res <= 419)
+                {
+                    mucDoRuiRo = "Mức độ rủi ro hạng 8";
+                }
+                else
+                {
+                    mucDoRuiRo = "Không xác định";
+                }
+
+                richTextBox1.Text = mucDoRuiRo;
+
+                // Decrypt and print CCCD
+                Ciphertext cipher_CCCD = new Ciphertext();
+                    cipher_CCCD = ConvertBase64ToCiphertext(encryptedData.CCCD, context);
+                    // Giải mã Ciphertext trở lại Plaintext
+                    Plaintext decryptedPlainText = new Plaintext();
+                    decryptor.Decrypt(cipher_CCCD, decryptedPlainText);
+                    // Giải mã mảng số thực thành chuỗi
+                    List<double> decryptedValues = new List<double>();
+                    encoder.Decode(decryptedPlainText, decryptedValues);
+                    byte[] decodedBytes = decryptedValues.Select(v => (byte)Math.Round(v)).ToArray();
+                    string decryptedText = Encoding.UTF8.GetString(decodedBytes);
+                    textBox7.Text = decryptedText;
+
+                    // Decrypt and print Name
+                    Ciphertext cipher_Name = new Ciphertext();
+                    cipher_Name = ConvertBase64ToCiphertext(encryptedData.Name, context);
+                    // Giải mã Ciphertext trở lại Plaintext
+                    decryptedPlainText = new Plaintext();
+                    decryptor.Decrypt(cipher_Name, decryptedPlainText);
+                    // Giải mã mảng số thực thành chuỗi
+                    decryptedValues = new List<double>();
+                    encoder.Decode(decryptedPlainText, decryptedValues);
+                    byte[] decodedBytes_Name = decryptedValues.Select(v => (byte)Math.Round(v)).ToArray();
+                    string decryptedText_name = Encoding.UTF8.GetString(decodedBytes_Name);
+                    textBox6.Text = decryptedText_name;
+
+                    
+                    break;
+                
+                
+            }
         }
     }
 }

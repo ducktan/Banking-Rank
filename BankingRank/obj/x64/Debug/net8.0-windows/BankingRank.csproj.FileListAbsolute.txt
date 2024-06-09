@@ -34,3 +34,109 @@ C:\Users\tieul\Document\NT219DoAn\BankingRank\BankingRank\obj\x64\Debug\net8.0-w
 C:\Users\tieul\Document\NT219DoAn\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.pdb
 C:\Users\tieul\Document\NT219DoAn\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.genruntimeconfig.cache
 C:\Users\tieul\Document\NT219DoAn\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\ref\BankingRank.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.csproj.AssemblyReference.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.Form1.resources
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.csproj.GenerateResource.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.AssemblyInfoInputs.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.AssemblyInfo.cs
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.csproj.CoreCompileInputs.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.sourcelink.json
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\refint\BankingRank.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.pdb
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\sealc.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.exe
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.deps.json
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.runtimeconfig.json
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.pdb
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\AWSSDK.Core.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\AWSSDK.SecurityToken.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\DnsClient.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\SEALNet.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Bson.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Driver.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Driver.Core.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Libmongocrypt.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\SharpCompress.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\Snappier.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\ZstdSharp.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\runtimes\linux\native\libmongocrypt.so
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\bin\x64\Debug\net8.0-windows\runtimes\win\native\mongocrypt.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingR.BE9E2AB6.Up2Date
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.genruntimeconfig.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\Banking-Rank\BankingRank\obj\x64\Debug\net8.0-windows\ref\BankingRank.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\sealc.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.exe
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.deps.json
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.runtimeconfig.json
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.pdb
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\AWSSDK.Core.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\AWSSDK.SecurityToken.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\DnsClient.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\SEALNet.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Bson.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Driver.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Driver.Core.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Libmongocrypt.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\SharpCompress.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\Snappier.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\ZstdSharp.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\runtimes\linux\native\libmongocrypt.so
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\runtimes\win\native\mongocrypt.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.csproj.AssemblyReference.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.Form1.resources
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.csproj.GenerateResource.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.AssemblyInfoInputs.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.AssemblyInfo.cs
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.csproj.CoreCompileInputs.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingR.BE9E2AB6.Up2Date
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\refint\BankingRank.dll
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.pdb
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.genruntimeconfig.cache
+C:\Users\thai2\OneDrive\Máy tính\DoAnMatMaHoc\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\ref\BankingRank.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\sealc.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.exe
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.deps.json
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.runtimeconfig.json
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\BankingRank.pdb
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\AWSSDK.Core.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\AWSSDK.SecurityToken.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\DnsClient.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\SEALNet.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Bson.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Driver.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Driver.Core.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\MongoDB.Libmongocrypt.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\SharpCompress.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\Snappier.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\ZstdSharp.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\runtimes\linux\native\libmongocrypt.so
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\tieul\Desktop\BankingRank\BankingRank\bin\x64\Debug\net8.0-windows\runtimes\win\native\mongocrypt.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.csproj.AssemblyReference.cache
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.Form1.resources
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.csproj.GenerateResource.cache
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.AssemblyInfoInputs.cache
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.AssemblyInfo.cs
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.csproj.CoreCompileInputs.cache
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingR.BE9E2AB6.Up2Date
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\refint\BankingRank.dll
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.pdb
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\BankingRank.genruntimeconfig.cache
+C:\Users\tieul\Desktop\BankingRank\BankingRank\obj\x64\Debug\net8.0-windows\ref\BankingRank.dll

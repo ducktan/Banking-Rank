@@ -49,14 +49,6 @@
             button8 = new Button();
             textBox5 = new TextBox();
             label12 = new Label();
-            tabPage3 = new TabPage();
-            button6 = new Button();
-            textBox4 = new TextBox();
-            label5 = new Label();
-            button3 = new Button();
-            button4 = new Button();
-            textBox2 = new TextBox();
-            label3 = new Label();
             tabPage4 = new TabPage();
             textBox9 = new TextBox();
             label10 = new Label();
@@ -70,23 +62,21 @@
             label8 = new Label();
             priName = new TextBox();
             richTextBox1 = new RichTextBox();
-            richTextBox2 = new RichTextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
             groupBox1.SuspendLayout();
-            tabPage3.SuspendLayout();
             tabPage4.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Century Gothic", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Microsoft Sans Serif", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.Black;
             label1.Location = new Point(26, 20);
             label1.Name = "label1";
-            label1.Size = new Size(273, 40);
+            label1.Size = new Size(289, 39);
             label1.TabIndex = 0;
             label1.Text = "BANKING RANK";
             // 
@@ -94,7 +84,6 @@
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage4);
             tabControl1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             tabControl1.Location = new Point(34, 75);
@@ -106,7 +95,6 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.White;
-            tabPage1.Controls.Add(richTextBox1);
             tabPage1.Controls.Add(button5);
             tabPage1.Controls.Add(textBox3);
             tabPage1.Controls.Add(label4);
@@ -120,7 +108,6 @@
             tabPage1.Size = new Size(971, 445);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Upload data";
-            tabPage1.Click += tabPage1_Click;
             // 
             // button5
             // 
@@ -192,6 +179,7 @@
             // tabPage2
             // 
             tabPage2.BackColor = Color.White;
+            tabPage2.Controls.Add(richTextBox1);
             tabPage2.Controls.Add(groupBox1);
             tabPage2.Controls.Add(button8);
             tabPage2.Controls.Add(textBox5);
@@ -279,12 +267,13 @@
             button8.TabIndex = 4;
             button8.Text = "Calculation";
             button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(399, 37);
+            textBox5.Location = new Point(178, 37);
             textBox5.Name = "textBox5";
-            textBox5.Size = new Size(490, 30);
+            textBox5.Size = new Size(711, 30);
             textBox5.TabIndex = 3;
             // 
             // label12
@@ -293,93 +282,9 @@
             label12.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label12.Location = new Point(30, 39);
             label12.Name = "label12";
-            label12.Size = new Size(336, 28);
+            label12.Size = new Size(142, 28);
             label12.TabIndex = 2;
-            label12.Text = "▶ Enter the citizen identification card";
-            // 
-            // tabPage3
-            // 
-            tabPage3.BackColor = Color.White;
-            tabPage3.Controls.Add(richTextBox2);
-            tabPage3.Controls.Add(button6);
-            tabPage3.Controls.Add(textBox4);
-            tabPage3.Controls.Add(label5);
-            tabPage3.Controls.Add(button3);
-            tabPage3.Controls.Add(button4);
-            tabPage3.Controls.Add(textBox2);
-            tabPage3.Controls.Add(label3);
-            tabPage3.Location = new Point(4, 32);
-            tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(971, 445);
-            tabPage3.TabIndex = 2;
-            tabPage3.Text = "Download data";
-            // 
-            // button6
-            // 
-            button6.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button6.Location = new Point(772, 112);
-            button6.Name = "button6";
-            button6.Size = new Size(157, 31);
-            button6.TabIndex = 10;
-            button6.Text = "Choose file";
-            button6.UseVisualStyleBackColor = true;
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(223, 113);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(479, 30);
-            textBox4.TabIndex = 9;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(26, 115);
-            label5.Name = "label5";
-            label5.Size = new Size(129, 28);
-            label5.TabIndex = 8;
-            label5.Text = "▶ Private key";
-            // 
-            // button3
-            // 
-            button3.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.Location = new Point(26, 180);
-            button3.Name = "button3";
-            button3.Size = new Size(157, 31);
-            button3.TabIndex = 7;
-            button3.Text = "Download";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click_1;
-            // 
-            // button4
-            // 
-            button4.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.Location = new Point(772, 49);
-            button4.Name = "button4";
-            button4.Size = new Size(157, 31);
-            button4.TabIndex = 6;
-            button4.Text = "Choose file";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(223, 50);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(479, 30);
-            textBox2.TabIndex = 5;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(26, 52);
-            label3.Name = "label3";
-            label3.Size = new Size(193, 28);
-            label3.TabIndex = 4;
-            label3.Text = "▶ Download all data";
+            label12.Text = "▶Enter ID User";
             // 
             // tabPage4
             // 
@@ -485,8 +390,10 @@
             // 
             pubName.Location = new Point(508, 46);
             pubName.Name = "pubName";
+            pubName.ReadOnly = true;
             pubName.Size = new Size(247, 30);
             pubName.TabIndex = 12;
+            pubName.Text = "public.key";
             // 
             // label8
             // 
@@ -502,24 +409,18 @@
             // 
             priName.Location = new Point(15, 46);
             priName.Name = "priName";
+            priName.ReadOnly = true;
             priName.Size = new Size(444, 30);
             priName.TabIndex = 10;
+            priName.Text = "secret.key";
             // 
             // richTextBox1
             // 
-            richTextBox1.Location = new Point(12, 237);
+            richTextBox1.Location = new Point(22, 366);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(911, 175);
-            richTextBox1.TabIndex = 7;
+            richTextBox1.Size = new Size(905, 52);
+            richTextBox1.TabIndex = 6;
             richTextBox1.Text = "";
-            // 
-            // richTextBox2
-            // 
-            richTextBox2.Location = new Point(26, 231);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(911, 175);
-            richTextBox2.TabIndex = 11;
-            richTextBox2.Text = "";
             // 
             // Form1
             // 
@@ -538,8 +439,6 @@
             tabPage2.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            tabPage3.ResumeLayout(false);
-            tabPage3.PerformLayout();
             tabPage4.ResumeLayout(false);
             tabPage4.PerformLayout();
             ResumeLayout(false);
@@ -552,22 +451,14 @@
         private TabControl tabControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
-        private TabPage tabPage3;
         private Button button2;
         private Button button1;
         private TextBox textBox1;
         private Label label2;
-        private Button button3;
-        private Button button4;
-        private TextBox textBox2;
-        private Label label3;
         private Button button5;
         private TextBox textBox3;
         private Label label4;
         private TabPage tabPage4;
-        private Button button6;
-        private TextBox textBox4;
-        private Label label5;
         private Label label6;
         private Label label7;
         private TextBox pubName;
@@ -590,6 +481,5 @@
         private Label label13;
         private TextBox textBox9;
         private RichTextBox richTextBox1;
-        private RichTextBox richTextBox2;
     }
 }

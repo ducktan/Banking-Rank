@@ -1,7 +1,62 @@
 [
   {
-  "Name": "Antonio Rose",
-  "CCCD": "531342926752",
-  "LoanNum": 5
-}
+    "ID": "AB001",
+    "Name": "April Clarke",
+    "CCCD": "352074881431",
+    "LatePaymentCount": 5,
+    "LoanCount": 19,
+    "DebtAmount": 9,
+    "AssetValue": 3524,
+    "ServiceUsageTime": 2,
+    "TotalTimeSinceCardOpened": 11,
+    "CreditTypeCount": 6,
+    "TotalCreditTypeCount": 108,
+    "NewAccountsInMonth": 2,
+    "TotalUserAccounts": 17
+  },
+  {
+    "ID": "AB002",
+    "Name": "April Clarke1",
+    "CCCD": "352074881488",
+    "LatePaymentCount": 1,
+    "LoanCount": 7,
+    "DebtAmount": 3000,
+    "AssetValue": 3524,
+    "ServiceUsageTime": 6,
+    "TotalTimeSinceCardOpened": 11,
+    "CreditTypeCount": 50,
+    "TotalCreditTypeCount": 108,
+    "NewAccountsInMonth": 9,
+    "TotalUserAccounts": 17
+  },
+  {
+    "ID": "AB003",
+    "Name": "April Clarke2",
+    "CCCD": "352074881463",
+    "LatePaymentCount": 6,
+    "LoanCount": 8,
+    "DebtAmount": 3500,
+    "AssetValue": 3524,
+    "ServiceUsageTime": 6,
+    "TotalTimeSinceCardOpened": 11,
+    "CreditTypeCount": 107,
+    "TotalCreditTypeCount": 108,
+    "NewAccountsInMonth": 16,
+    "TotalUserAccounts": 17
+  }, 
+  {
+    "ID": "AB004",
+    "Name": "Duc Tan",
+    "CCCD": "049004003198",
+    "LatePaymentCount": 53,
+    "LoanCount": 100,
+    "DebtAmount": 1000,
+    "AssetValue": 20000,
+    "ServiceUsageTime": 3,
+    "TotalTimeSinceCardOpened": 12,
+    "CreditTypeCount": 12,
+    "TotalCreditTypeCount": 20,
+    "NewAccountsInMonth": 11,
+    "TotalUserAccounts": 18
+  }
 ]
